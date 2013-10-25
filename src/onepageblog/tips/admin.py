@@ -14,7 +14,7 @@
 # along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.contrib import admin
-from techtips.tips.models import Tip
+from onepageblog.tips.models import Tip
 
 class TipAdmin(admin.ModelAdmin):
     # List parameters

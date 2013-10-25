@@ -16,10 +16,10 @@
  */ 
 
 /**
- * The techtips object is the namespace into which we put all techtips-related 
+ * The onepageblog object is the namespace into which we put all onepageblog-related 
  * functionality.
  */
-var techtips = function () {
+var onepageblog = function () {
     
     // Public
     return {

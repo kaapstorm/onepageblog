@@ -24,8 +24,8 @@ from django.template import Context, loader, RequestContext
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import ListView, DetailView
 
-from techtips.tips.forms import TipForm, UserChangeForm
-from techtips.tips.models import Tip
+from onepageblog.tips.forms import TipForm, UserChangeForm
+from onepageblog.tips.models import Tip
 
 
 class TipListView(ListView):

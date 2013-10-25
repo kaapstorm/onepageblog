@@ -18,7 +18,7 @@ from django.contrib.auth.models import User
 from django.forms import ModelForm
 from django.template.defaultfilters import slugify
 
-from techtips.tips.models import Tip
+from onepageblog.tips.models import Tip
 
 
 class TipForm(ModelForm):

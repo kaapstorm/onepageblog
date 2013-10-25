@@ -14,7 +14,7 @@
 # along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.contrib.syndication.views import Feed
-from techtips.tips.models import Tip
+from onepageblog.tips.models import Tip
 
 class TechTipsFeed(Feed):
     title = "Tech Tips"

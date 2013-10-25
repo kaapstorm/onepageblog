@@ -89,7 +89,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'techtips.urls'
+ROOT_URLCONF = 'onepageblog.urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -107,12 +107,12 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.markup',
     
-    'techtips.tips',
-    'techtips.tips.templatetags',
+    'onepageblog.tips',
+    'onepageblog.tips.templatetags',
 )
 
 # Import local overrides
 try:
-    from techtips.settings_local import *
+    from onepageblog.settings_local import *
 except ImportError:
     pass

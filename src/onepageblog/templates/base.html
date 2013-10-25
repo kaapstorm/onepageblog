@@ -41,7 +41,7 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
     
     <script type="text/javascript" src="{{ MEDIA_URL }}/js/jquery-1.6.2.min.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}/js/modernizr-2.0.6.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}/js/techtips.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}/js/onepageblog.js"></script>
     {% block script %}{% endblock %}
     
     <link rel="stylesheet" type="text/css" media="screen" 
@@ -66,11 +66,11 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
       <nav id="accounts_nav">
         {% if user.is_authenticated %}
         You are logged in as 
-        <a href="{% url techtips.tips.views.profile %}">{{ user }}</a> |
-        [<a href="{% url techtips.tips.views.logout %}">Logout</a>]
+        <a href="{% url onepageblog.tips.views.profile %}">{{ user }}</a> |
+        [<a href="{% url onepageblog.tips.views.logout %}">Logout</a>]
         {% else %}
         [<a href="{% url django.contrib.auth.views.login %}?next={% url tip_list_view %}">Login</a>]
-        [<a href="{% url techtips.tips.views.register %}">Register</a>]
+        [<a href="{% url onepageblog.tips.views.register %}">Register</a>]
         {% endif %}
         [<a href="{% absurl feed %}">Feed</a>]
       </nav>
@@ -108,7 +108,7 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
           The source code is released under the 
           <a href="https://www.gnu.org/licenses/agpl.html">GNU Affero General 
           Public License</a>, and is available at 
-          <a href="https://github.com/kaapstorm/techtips">GitHub</a>.
+          <a href="https://github.com/kaapstorm/onepageblog">GitHub</a>.
           
           The lightbulb icon is by 
           <a href="http://tango.freedesktop.org/The_People">the people from the
