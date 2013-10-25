@@ -37,7 +37,7 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
           sizes="16x16" href="{{ MEDIA_URL }}/img/favicon.ico" />
     <!-- Atom feed -->
     <link rel="alternate" type="application/rss+xml; version=2.0"
-          title="onepageblog Atom Feed" href="{% absurl feed %}" />
+          title="onepageblog Atom Feed" href="{% absurl 'feed' %}" />
 
     <script type="text/javascript" src="{{ MEDIA_URL }}/js/jquery-1.6.2.min.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}/js/modernizr-2.0.6.js"></script>
@@ -66,13 +66,13 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
       <nav id="accounts_nav">
         {% if user.is_authenticated %}
         You are logged in as
-        <a href="{% url onepageblog.posts.views.profile %}">{{ user }}</a> |
-        [<a href="{% url onepageblog.posts.views.logout %}">Logout</a>]
+        <a href="{% url 'onepageblog.posts.views.profile' %}">{{ user }}</a> |
+        [<a href="{% url 'onepageblog.posts.views.logout' %}">Logout</a>]
         {% else %}
-        [<a href="{% url django.contrib.auth.views.login %}?next={% url post_list_view %}">Login</a>]
-        [<a href="{% url onepageblog.posts.views.register %}">Register</a>]
+        [<a href="{% url 'django.contrib.auth.views.login' %}?next={% url 'post_list_view' %}">Login</a>]
+        [<a href="{% url 'onepageblog.posts.views.register' %}">Register</a>]
         {% endif %}
-        [<a href="{% absurl feed %}">Feed</a>]
+        [<a href="{% absurl 'feed' %}">Feed</a>]
       </nav>
 
       <header>

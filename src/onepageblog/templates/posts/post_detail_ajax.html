@@ -20,5 +20,5 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
   {{ post.content|safe }}
 </div>
 <p class="post_link">
-  [<a href="{% absurl post_detail_view slug=post.slug %}">Permalink</a>]
+  [<a href="{% absurl 'post_detail_view' slug=post.slug %}">Permalink</a>]
 </p>

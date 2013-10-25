@@ -19,15 +19,15 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 
 {% block script %}
 <script type="text/javascript"><!--
-    
+
 $(document).ready(function () {
     // Change anchors to AJAX
     $('div.list_item > h2 > a').each(onepageblog.load_post);
-    
+
     {% comment %}
     // Remove pagination
     //$('nav.pagination').remove();
-    
+
     // Add async content loader at bottom of page
     // TODO: ...
     {% endcomment %}
@@ -39,7 +39,7 @@ $(document).ready(function () {
 {% block content %}
 
 <nav id="actions_nav">
-  [<a href="{% url add_post_view %}">Send Us A Post</a>]
+  [<a href="{% url 'add_post_view' %}">Send Us A Post</a>]
 </nav>
 
 {% comment %}
@@ -61,17 +61,17 @@ $(document).ready(function () {
 <div id="list_items">
     {% for post in post_list %}
     <div class="list_item">
-        
+
         <h2>
             <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
         </h2>
         <h3>{{ post.created_at|date:"l j M Y" }} | {{ post.created_by }}</h3>
-        
+
         <div class="list_item_outer"></div>
     </div>
-    
+
     {% endfor %}
-    
+
     {% comment %}
     <!-- TODO: Fetch more asynchronously -->
     {% endcomment %}
