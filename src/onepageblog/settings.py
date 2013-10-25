@@ -72,7 +72,7 @@ MEDIA_URL = ''
 ADMIN_MEDIA_PREFIX = '/media/'
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'l&t0r4cc2e_t(bj6dca*30k6_=o!y_jx2gm29uz=$slkmb5=i9'
+SECRET_KEY = 'secret_key'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -105,7 +105,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     
     'django.contrib.admin',
-    'django.contrib.markup',
     
     'onepageblog.posts',
     'onepageblog.posts.templatetags',
