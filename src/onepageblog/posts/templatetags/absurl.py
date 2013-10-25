@@ -17,7 +17,12 @@
 # You should have received a copy of the GNU General Public License
 # along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 
-import urlparse
+try:
+    # Python 2
+    import urlparse
+except ImportError:
+    # Python 3
+    from urllib import parse as urlparse
 from django.template import Library
 from django.template.defaulttags import URLNode, url
 from django.contrib.sites.models import Site
