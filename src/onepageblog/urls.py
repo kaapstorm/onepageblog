@@ -24,7 +24,9 @@ from onepageblog.posts.views import PostListView, PostDetailView, add_post, prof
 
 admin.autodiscover()
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
+    # Post URLs
     url(r'^$', PostListView.as_view(),
         name='post_list_view'),
     url(r'^post/(?P<slug>[\w\-_]+)/$', PostDetailView.as_view(),
@@ -35,9 +37,11 @@ urlpatterns = patterns('',
     url(r'^new/$', add_post,
         name='add_post_view'),
 
+    # Feed URL
     url(r'^feed/rss20.xml$', PostsFeed(),
         name='feed'),
 
+    # Account URLs
     (r'^accounts/login/$', login),
     (r'^accounts/logout/$', logout),
     (r'^accounts/register/$', register),
@@ -48,11 +52,14 @@ urlpatterns = patterns('',
         name='password_change_view',
         kwargs={'post_change_redirect': '../../'}),
 
+    # Admin URL
     (r'^admin/', include(admin.site.urls)),
 )
 
 if settings.DEBUG:
-    urlpatterns += patterns('',
+    # Serve media when developing
+    urlpatterns += patterns(
+        '',
         (r'^media/(?P<path>.*)$', 'django.views.static.serve',
          {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
     )
