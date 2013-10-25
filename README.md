@@ -25,9 +25,8 @@ To do
 -----
 
   1. Tests.
-  2. Python 3 support.
-  3. "like / tweet / +1" support.
-  4. Comments.
+  2. "like / tweet / +1" support.
+  3. Comments.
 
 
   [1]: http://daringfireball.net/projects/markdown/
