@@ -37,7 +37,7 @@ class Post(models.Model):
         return self.title
     
     def get_absolute_url(self):
-        return reverse('tip_detail_view', kwargs={'slug': self.slug})
+        return reverse('post_detail_view', kwargs={'slug': self.slug})
     
     def save(self, *args, **kwargs):
         """Converts markdown to safe HTML, and creates unique slug.
@@ -51,7 +51,7 @@ class Post(models.Model):
                                          safe_mode='escape')
         # Check slug is unique
         if self.slug is None or len(self.slug) == 0:
-            # self.slug will be None if the tip was created using PostForm
+            # self.slug will be None if the post was created using PostForm
             self.slug = slugify(self.title)
         if len(self.slug) == 0:
             # If the title has no alphanumeric characters, slug will be empty

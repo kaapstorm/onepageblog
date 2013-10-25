@@ -16,8 +16,8 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 
 {% endcomment %}
 
-## {{ tip.title }}
+## {{ post.title }}
 
-### {{ tip.created_at|date:"l j M Y" }} | {{ tip.created_by }}
+### {{ post.created_at|date:"l j M Y" }} | {{ post.created_by }}
 
-{{ tip.content_markdown }}
+{{ post.content_markdown }}

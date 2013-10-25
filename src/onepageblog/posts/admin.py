@@ -14,7 +14,7 @@
 # along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.contrib import admin
-from onepageblog.tips.models import Post
+from onepageblog.posts.models import Post
 
 class PostAdmin(admin.ModelAdmin):
     # List parameters

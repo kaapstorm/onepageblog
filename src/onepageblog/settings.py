@@ -107,8 +107,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.markup',
     
-    'onepageblog.tips',
-    'onepageblog.tips.templatetags',
+    'onepageblog.posts',
+    'onepageblog.posts.templatetags',
 )
 
 # Import local overrides

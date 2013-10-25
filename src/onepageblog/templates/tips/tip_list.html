@@ -22,7 +22,7 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
     
 $(document).ready(function () {
     // Change anchors to AJAX
-    $('div.list_item > h2 > a').each(onepageblog.load_tip);
+    $('div.list_item > h2 > a').each(onepageblog.load_post);
     
     {% comment %}
     // Remove pagination
@@ -39,7 +39,7 @@ $(document).ready(function () {
 {% block content %}
 
 <nav id="actions_nav">
-  [<a href="{% url add_tip_view %}">Send Us A Post</a>]
+  [<a href="{% url add_post_view %}">Send Us A Post</a>]
 </nav>
 
 {% comment %}
@@ -59,13 +59,13 @@ $(document).ready(function () {
 {% endcomment %}
 
 <div id="list_items">
-    {% for tip in tip_list %}
+    {% for post in post_list %}
     <div class="list_item">
         
         <h2>
-            <a href="{{ tip.get_absolute_url }}">{{ tip.title }}</a>
+            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
         </h2>
-        <h3>{{ tip.created_at|date:"l j M Y" }} | {{ tip.created_by }}</h3>
+        <h3>{{ post.created_at|date:"l j M Y" }} | {{ post.created_by }}</h3>
         
         <div class="list_item_outer"></div>
     </div>

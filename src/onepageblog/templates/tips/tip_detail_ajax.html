@@ -17,8 +17,8 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 {% endcomment %}
 {% load absurl %}
 <div class="list_item_inner">
-  {{ tip.content|safe }}
+  {{ post.content|safe }}
 </div>
-<p class="tip_link">
-  [<a href="{% absurl tip_detail_view slug=tip.slug %}">Permalink</a>]
+<p class="post_link">
+  [<a href="{% absurl post_detail_view slug=post.slug %}">Permalink</a>]
 </p>

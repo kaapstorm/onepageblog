@@ -18,8 +18,8 @@ from django.conf.urls.defaults import patterns, include, url
 from django.contrib import admin
 from django.contrib.auth.views import login, password_change
 
-from onepageblog.tips.feeds import PostsFeed
-from onepageblog.tips.views import (PostListView, PostDetailView, add_tip, 
+from onepageblog.posts.feeds import PostsFeed
+from onepageblog.posts.views import (PostListView, PostDetailView, add_post, 
     profile, edit_profile, register, logout)
 
 
@@ -27,14 +27,14 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', PostListView.as_view(), 
-        name='tip_list_view'),
-    url(r'^tip/(?P<slug>[\w\-_]+)/$', PostDetailView.as_view(), 
-        name='tip_detail_view'),
-    url(r'^tip/(?P<slug>[\w\-_]+)/ajax/$', 
-        PostDetailView.as_view(template_name='tips/tip_detail_ajax.html'), 
-        name='tip_detail_ajax_view'),
-    url(r'^new/$', add_tip,
-        name='add_tip_view'),
+        name='post_list_view'),
+    url(r'^post/(?P<slug>[\w\-_]+)/$', PostDetailView.as_view(), 
+        name='post_detail_view'),
+    url(r'^post/(?P<slug>[\w\-_]+)/ajax/$', 
+        PostDetailView.as_view(template_name='posts/post_detail_ajax.html'), 
+        name='post_detail_ajax_view'),
+    url(r'^new/$', add_post,
+        name='add_post_view'),
     
     url(r'^feed/atom.xml$', PostsFeed(), 
         name='feed'),

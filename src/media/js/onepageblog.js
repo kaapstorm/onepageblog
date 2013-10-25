@@ -25,10 +25,10 @@ var onepageblog = function () {
     return {
         
         /**
-         * load_tip loads a techtip asynchronously, and then hides it if the 
+         * load_post loads a post asynchronously, and then hides it if the 
          * user click on the title a second time. 
          */
-        load_tip: function () {
+        load_post: function () {
             var original_href = $(this).attr('href'); 
             $(this).attr('href', '#');
             $(this).click(function () {

@@ -16,7 +16,7 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 
 {% endcomment %}
 
-<h2>{{ tip.title }}</h2>
-<h3>{{ tip.created_at|date:"l j M Y" }} | {{ tip.created_by }}</h3>
+<h2>{{ post.title }}</h2>
+<h3>{{ post.created_at|date:"l j M Y" }} | {{ post.created_by }}</h3>
 
-{{ tip.content|safe }}
+{{ post.content|safe }}

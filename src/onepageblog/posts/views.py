@@ -24,16 +24,16 @@ from django.template import Context, loader, RequestContext
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import ListView, DetailView
 
-from onepageblog.tips.forms import PostForm, UserChangeForm
-from onepageblog.tips.models import Post
+from onepageblog.posts.forms import PostForm, UserChangeForm
+from onepageblog.posts.models import Post
 
 
 class PostListView(ListView):
-    context_object_name = 'tip_list'
+    context_object_name = 'post_list'
     
     def get_queryset(self):
-        """If the user is a member of the Moderators group, show all tips,
-        otherwise just show published tips.
+        """If the user is a member of the Moderators group, show all posts,
+        otherwise just show published posts.
         """
         if self.request.user.is_authenticated() \
                 and self.request.user.groups.filter(name='Moderators').count():
@@ -42,10 +42,10 @@ class PostListView(ListView):
 
 
 class PostDetailView(DetailView):
-    context_object_name = 'tip'
+    context_object_name = 'post'
     
     def get_queryset(self):
-        """Allow moderators to see unpublished tips.
+        """Allow moderators to see unpublished posts.
         """
         if self.request.user.is_authenticated() \
                 and self.request.user.groups.filter(name='Moderators').count():
@@ -63,7 +63,7 @@ def register(request):
             user = auth.authenticate(username=request.POST['username'], 
                                      password=request.POST['password1'])
             auth.login(request, user)
-            return HttpResponseRedirect(reverse('tip_list_view'))
+            return HttpResponseRedirect(reverse('post_list_view'))
     else:
         form = UserCreationForm()
     return render_to_response("registration/register.html", 
@@ -72,39 +72,39 @@ def register(request):
 
 
 def logout(request):
-    """Logs out and redirects to the tip list.
+    """Logs out and redirects to the post list.
     """
     auth.logout(request)
-    return HttpResponseRedirect(reverse('tip_list_view'))
+    return HttpResponseRedirect(reverse('post_list_view'))
 
 
 @login_required
 @csrf_protect
-def add_tip(request):
-    """Submit a new tip.
+def add_post(request):
+    """Submit a new post.
     """
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
             # Save the submission
-            tip = form.save(commit=False)
-            tip.created_by = request.user
-            tip.save()
+            post = form.save(commit=False)
+            post.created_by = request.user
+            post.save()
             # Notify managers of new submission
-            c = Context({'tip': tip})
-            t = loader.get_template('tips/tip_email.txt')
+            c = Context({'post': post})
+            t = loader.get_template('posts/post_email.txt')
             text_message = t.render(c)
-            t = loader.get_template('tips/tip_email.html')
+            t = loader.get_template('posts/post_email.html')
             html_message = t.render(c)
-            mail_managers('New tip submission', text_message,
+            mail_managers('New post submission', text_message,
                           fail_silently=True, html_message=html_message)
             # Confirm submission
             messages.success(request, 
-                             'Thank you. Your tip has been submitted.')
-            return HttpResponseRedirect(reverse('tip_list_view'))
+                             'Thank you. Your post has been submitted.')
+            return HttpResponseRedirect(reverse('post_list_view'))
     else:
         form = PostForm()
-    return render_to_response('tips/tip_add.html',
+    return render_to_response('posts/post_add.html',
                               {'form': form},
                               context_instance=RequestContext(request))
 
@@ -122,7 +122,7 @@ def edit_profile(request):
         form = UserChangeForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save(commit=False)
-            return HttpResponseRedirect(reverse('tip_list_view'))
+            return HttpResponseRedirect(reverse('post_list_view'))
     else:
         form = UserChangeForm(instance=request.user)
     return render_to_response('registration/edit_profile.html',
