@@ -1,3 +1,3 @@
-
+*.pyc
 src/onepageblog/settings_local.py
-
+src/onepageblog/sqlite.db
