@@ -1,17 +1,17 @@
-# This file is part of Tech Tip of the Day.
+# This file is part of onepageblog.
 # 
-# Tech Tip of the Day is free software: you can redistribute it and/or modify
+# onepageblog is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 # 
-# Tech Tip of the Day is distributed in the hope that it will be useful,
+# onepageblog is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 # 
 # You should have received a copy of the GNU General Public License
-# along with Tech Tip of the Day.  If not, see <http://www.gnu.org/licenses/>.
+# along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 
 import markdown
 import re
@@ -25,8 +25,9 @@ from django.template.defaultfilters import slugify
 class Tip(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
-    content_markdown = models.TextField(verbose_name='Content (Markdown-formatted)',
-                                        help_text='Use <a href="http://daringfireball.net/projects/markdown/">Markdown</a> syntax')
+    content_markdown = models.TextField(
+        verbose_name='Content (Markdown-formatted)',
+        help_text='Use <a href="http://daringfireball.net/projects/markdown/">Markdown</a> syntax')
     content = models.TextField()
     created_by = models.ForeignKey(User)
     created_at = models.DateTimeField(auto_now_add=True)
