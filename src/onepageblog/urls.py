@@ -14,13 +14,12 @@
 # along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.conf import settings
-from django.conf.urls.defaults import patterns, include, url
+from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.contrib.auth.views import login, password_change
 
 from onepageblog.posts.feeds import PostsFeed
-from onepageblog.posts.views import (PostListView, PostDetailView, add_post,
-    profile, edit_profile, register, logout)
+from onepageblog.posts.views import PostListView, PostDetailView, add_post, profile, edit_profile, register, logout
 
 
 admin.autodiscover()
