@@ -18,25 +18,25 @@ from django.conf.urls.defaults import patterns, include, url
 from django.contrib import admin
 from django.contrib.auth.views import login, password_change
 
-from onepageblog.tips.feeds import TechTipsFeed
-from onepageblog.tips.views import (TipListView, TipDetailView, add_tip, 
+from onepageblog.tips.feeds import PostsFeed
+from onepageblog.tips.views import (PostListView, PostDetailView, add_tip, 
     profile, edit_profile, register, logout)
 
 
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', TipListView.as_view(), 
+    url(r'^$', PostListView.as_view(), 
         name='tip_list_view'),
-    url(r'^tip/(?P<slug>[\w\-_]+)/$', TipDetailView.as_view(), 
+    url(r'^tip/(?P<slug>[\w\-_]+)/$', PostDetailView.as_view(), 
         name='tip_detail_view'),
     url(r'^tip/(?P<slug>[\w\-_]+)/ajax/$', 
-        TipDetailView.as_view(template_name='tips/tip_detail_ajax.html'), 
+        PostDetailView.as_view(template_name='tips/tip_detail_ajax.html'), 
         name='tip_detail_ajax_view'),
     url(r'^new/$', add_tip,
         name='add_tip_view'),
     
-    url(r'^feed/atom.xml$', TechTipsFeed(), 
+    url(r'^feed/atom.xml$', PostsFeed(), 
         name='feed'),
                        
     (r'^accounts/login/$', login),

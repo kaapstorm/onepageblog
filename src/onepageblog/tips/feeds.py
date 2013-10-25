@@ -14,14 +14,14 @@
 # along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.contrib.syndication.views import Feed
-from onepageblog.tips.models import Tip
+from onepageblog.tips.models import Post
 
-class TechTipsFeed(Feed):
-    title = "Tech Tips"
+class PostsFeed(Feed):
+    title = "Posts"
     link = "/"
     
     def items(self):
-        return Tip.objects.filter(is_published=True)\
+        return Post.objects.filter(is_published=True)\
                           .order_by('-created_at')[:10]
     
     def item_title(self, item):

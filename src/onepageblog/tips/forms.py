@@ -18,14 +18,14 @@ from django.contrib.auth.models import User
 from django.forms import ModelForm
 from django.template.defaultfilters import slugify
 
-from onepageblog.tips.models import Tip
+from onepageblog.tips.models import Post
 
 
-class TipForm(ModelForm):
+class PostForm(ModelForm):
     """This form is used by site visitors to submit tips
     """
     class Meta:
-        model = Tip
+        model = Post
         fields = ('title', 'content_markdown')
 
 

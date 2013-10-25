@@ -14,9 +14,9 @@
 # along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.contrib import admin
-from onepageblog.tips.models import Tip
+from onepageblog.tips.models import Post
 
-class TipAdmin(admin.ModelAdmin):
+class PostAdmin(admin.ModelAdmin):
     # List parameters
     list_display = ('title', 'created_at', 'created_by', 'is_published')
     list_editable = ('is_published',)
@@ -36,5 +36,5 @@ class TipAdmin(admin.ModelAdmin):
         obj.save()
     
 
-admin.site.register(Tip, TipAdmin)
+admin.site.register(Post, PostAdmin)
 

@@ -24,11 +24,11 @@ from django.template import Context, loader, RequestContext
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import ListView, DetailView
 
-from onepageblog.tips.forms import TipForm, UserChangeForm
-from onepageblog.tips.models import Tip
+from onepageblog.tips.forms import PostForm, UserChangeForm
+from onepageblog.tips.models import Post
 
 
-class TipListView(ListView):
+class PostListView(ListView):
     context_object_name = 'tip_list'
     
     def get_queryset(self):
@@ -37,11 +37,11 @@ class TipListView(ListView):
         """
         if self.request.user.is_authenticated() \
                 and self.request.user.groups.filter(name='Moderators').count():
-            return Tip.objects.all()
-        return Tip.objects.filter(is_published=True)
+            return Post.objects.all()
+        return Post.objects.filter(is_published=True)
 
 
-class TipDetailView(DetailView):
+class PostDetailView(DetailView):
     context_object_name = 'tip'
     
     def get_queryset(self):
@@ -49,8 +49,8 @@ class TipDetailView(DetailView):
         """
         if self.request.user.is_authenticated() \
                 and self.request.user.groups.filter(name='Moderators').count():
-            return Tip.objects.all()
-        return Tip.objects.filter(is_published=True)
+            return Post.objects.all()
+        return Post.objects.filter(is_published=True)
 
 
 def register(request):
@@ -84,7 +84,7 @@ def add_tip(request):
     """Submit a new tip.
     """
     if request.method == 'POST':
-        form = TipForm(request.POST)
+        form = PostForm(request.POST)
         if form.is_valid():
             # Save the submission
             tip = form.save(commit=False)
@@ -103,7 +103,7 @@ def add_tip(request):
                              'Thank you. Your tip has been submitted.')
             return HttpResponseRedirect(reverse('tip_list_view'))
     else:
-        form = TipForm()
+        form = PostForm()
     return render_to_response('tips/tip_add.html',
                               {'form': form},
                               context_instance=RequestContext(request))

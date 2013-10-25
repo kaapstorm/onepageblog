@@ -22,7 +22,7 @@ from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
 
 
-class Tip(models.Model):
+class Post(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
     content_markdown = models.TextField(
@@ -51,7 +51,7 @@ class Tip(models.Model):
                                          safe_mode='escape')
         # Check slug is unique
         if self.slug is None or len(self.slug) == 0:
-            # self.slug will be None if the tip was created using TipForm
+            # self.slug will be None if the tip was created using PostForm
             self.slug = slugify(self.title)
         if len(self.slug) == 0:
             # If the title has no alphanumeric characters, slug will be empty
@@ -60,11 +60,11 @@ class Tip(models.Model):
         match = re.match('(.+?)(?:-\d+)?$', self.slug)
         initial_slug = match.groups()[0]
         serial = 1
-        while Tip.objects.exclude(id=self.id).filter(slug=self.slug)\
+        while Post.objects.exclude(id=self.id).filter(slug=self.slug)\
                          .count() > 0:
             serial += 1
             self.slug = '%s-%s' % (initial_slug, serial)
-        super(Tip, self).save(*args, **kwargs)
+        super(Post, self).save(*args, **kwargs)
     
     class Meta:
         ordering = ['-created_at']
