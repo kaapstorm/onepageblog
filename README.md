@@ -12,7 +12,7 @@ Bloggers can use [Markdown][1] for content markup.
 Feeds
 -----
 
-An RSS2 feed is available at the url "feed/".
+An RSS 2.0 feed is available at the url "feed/".
 
 
 Requirements
