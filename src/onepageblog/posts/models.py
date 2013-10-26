@@ -16,6 +16,7 @@ from datetime import datetime
 import re
 import markdown
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
@@ -38,7 +39,7 @@ class Post(models.Model):
     created_by = models.ForeignKey(User)
     created_at = models.DateTimeField(auto_now_add=True)
     is_published = models.BooleanField(default=False)
-    published_at = models.DateTimeField()
+    published_at = models.DateTimeField(null=True)
 
     def __unicode__(self):
         return self.title
@@ -58,7 +59,7 @@ class Post(models.Model):
         # http://www.freewisdom.org/projects/python-markdown/CodeHilite
         # Enable extra features. Escape tags.
         self.content = markdown.markdown(self.content_markdown, ['extra'],
-                                         safe_mode='escape')
+                                         safe_mode=settings.MARKDOWN_SAFE_MODE)
 
         # Create unique slug
         # Check slug is unique
