@@ -171,6 +171,11 @@ LOGGING = {
     }
 }
 
+# Disallow raw HTML in posts. Valid values are of "remove", "replace" or
+# "escape". Set to False to support markup not supported by Markdown, but risk
+# cross-site scripting.
+MARKDOWN_SAFE_MODE = 'escape'
+
 # Import local overrides
 try:
     from onepageblog.settings_local import *

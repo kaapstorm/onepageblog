@@ -22,7 +22,7 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 {% block header %}
 <h1><a href="{% url 'post_list_view' %}">onepageblog</a></h1>
 <h2>{{ post.title }}</h2>
-<h3>{{ post.created_at|date:"l j M Y" }} | {{ post.created_by }}</h3>
+<h3>{{ post.published_at|date:"l j M Y" }} | {{ post.created_by }}</h3>
 {% endblock %}
 
 {% block content %}

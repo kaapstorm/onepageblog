@@ -23,14 +23,6 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 $(document).ready(function () {
     // Change anchors to AJAX
     $('div.list_item > h2 > a').each(onepageblog.load_post);
-
-    {% comment %}
-    // Remove pagination
-    //$('nav.pagination').remove();
-
-    // Add async content loader at bottom of page
-    // TODO: ...
-    {% endcomment %}
 });
 
 // -->
@@ -42,22 +34,6 @@ $(document).ready(function () {
   [<a href="{% url 'add_post_view' %}">Send Us A Post</a>]
 </nav>
 
-{% comment %}
-<!-- TODO: ...
-<nav id="top_pagination" class="pagination">
-    <ul>
-        <li>[ |&lt;&lt; ]</li>
-        <li>[ &lt; ]</li>
-        <li>[ 3 ]</li>
-        <li>[ 4 ]</li>
-        <li>[ 5 ]</li>
-        <li>[ &gt; ]</li>
-        <li>[ &gt;&gt;| ]</li>
-    </ul>
-</nav>
--->
-{% endcomment %}
-
 <div id="list_items">
     {% for post in post_list %}
     <div class="list_item">
@@ -65,32 +41,13 @@ $(document).ready(function () {
         <h2>
             <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
         </h2>
-        <h3>{{ post.created_at|date:"l j M Y" }} | {{ post.created_by }}</h3>
+        <h3>{{ post.published_at|date:"l j M Y" }} | {{ post.created_by }}</h3>
 
         <div class="list_item_outer"></div>
     </div>
 
     {% endfor %}
 
-    {% comment %}
-    <!-- TODO: Fetch more asynchronously -->
-    {% endcomment %}
 </div>
-
-{% comment %}
-<!-- TODO: ...
-<nav id="bottom_pagination" class="pagination">
-    <ul>
-        <li>[ |&lt;&lt; ]</li>
-        <li>[ &lt; ]</li>
-        <li>[ 3 ]</li>
-        <li>[ 4 ]</li>
-        <li>[ 5 ]</li>
-        <li>[ &gt; ]</li>
-        <li>[ &gt;&gt;| ]</li>
-    </ul>
-</nav>
--->
-{% endcomment %}
 
 {% endblock %}
