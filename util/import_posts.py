@@ -1,6 +1,4 @@
-#
-# NOTE: Comment out "safe_mode" when parsing Markdown in models.py
-#
+#!/usr/bin/env python3
 import sys
 from django.contrib.auth.models import User
 import pymysql
