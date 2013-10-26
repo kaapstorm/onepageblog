@@ -1,3 +1,6 @@
+#
+# NOTE: Comment out "safe_mode" when parsing Markdown in models.py
+#
 import sys
 from django.contrib.auth.models import User
 import pymysql
