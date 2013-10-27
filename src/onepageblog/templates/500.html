@@ -21,7 +21,7 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
     <meta charset="utf-8" />
     <!-- Force latest IE rendering engine & Chrome Frame -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>onepageblog</title>
+    <title>{{ blog_title }}</title>
 
     <meta name="description" content="Daily posts with an emphasis on Linux and Python" />
 
@@ -73,28 +73,7 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
         notified. For now, let's go back to the <a href="/">start</a>.
       </div>
 
-      <footer>
-        <p class="blurb">
-          <em><span xmlns:dct="http://purl.org/dc/terms/"
-                    href="http://purl.org/dc/dcmitype/Text"
-                    property="dct:title"
-                    rel="dct:type">onepageblog</span></em>
-          content by <span xmlns:cc="http://creativecommons.org/ns#"
-                           property="cc:attributionName"
-                           rel="cc:attributionURL">Norman Hooper</span>
-          is licensed under a
-          <a rel="license"
-             href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0
-          Unported License</a>.
-
-          The source code is released under the <a href="https://www.gnu.org/licenses/agpl.html">GNU Affero General
-          Public License</a>, and is available at <a href="https://github.com/kaapstorm/onepageblog">GitHub</a>.
-
-          The lightbulb icon is by <a href="http://tango.freedesktop.org/The_People">the people from the Tango!
-          project</a>. The favicon is from the <a href="http://www.famfamfam.com/lab/icons/silk/">famfamfam Silk icon
-          set</a> by Mark James.
-        </p>
-      </footer>
+      <footer>{{ blog_footer|safe }}</footer>
     </div>
   </body>
 </html>

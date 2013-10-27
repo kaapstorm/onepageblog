@@ -17,10 +17,10 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 
 {% endcomment %}
 
-{% block title %}onepageblog - {{ post.title }}{% endblock %}
+{% block title %}{{ blog_title }} - {{ post.title }}{% endblock %}
 
 {% block header %}
-<h1><a href="{% url 'post_list_view' %}">onepageblog</a></h1>
+<h1><a href="{% url 'post_list_view' %}">{{ blog_title }}</a></h1>
 <h2>{{ post.title }}</h2>
 <h3>{{ post.published_at|date:"l j M Y" }} | {{ post.created_by }}</h3>
 {% endblock %}
