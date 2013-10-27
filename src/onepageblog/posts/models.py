@@ -32,6 +32,7 @@ class Post(models.Model):
     """
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
+    summary = models.CharField(max_length=255, blank=True)
     content_markdown = models.TextField(
         verbose_name='Content (Markdown-formatted)',
         help_text='Use <a href="http://daringfireball.net/projects/markdown/">Markdown</a> syntax')

@@ -13,7 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 #
-DEBUG = True
+import django.conf.global_settings as DEFAULT_SETTINGS
+
+
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -68,7 +71,7 @@ MEDIA_ROOT = ''
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://example.com/media/", "http://media.example.com/"
-MEDIA_URL = ''
+MEDIA_URL = '/media/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -175,6 +178,42 @@ LOGGING = {
 # "escape". Set to False to support markup not supported by Markdown, but risk
 # cross-site scripting.
 MARKDOWN_SAFE_MODE = 'escape'
+
+# The title to use as the page heading and the text in title bar.
+BLOG_TITLE = 'onepageblog'
+
+# Blog footer appears at the bottom of all pages, including the 404 and 500
+# error pages. It is wrapped in HTML5 "<footer>" tags.
+BLOG_FOOTER = """
+        <p class="blurb">
+          <em><span xmlns:dct="http://purl.org/dc/terms/"
+                    href="http://purl.org/dc/dcmitype/Text"
+                    property="dct:title"
+                    rel="dct:type">onepageblog</span></em>
+          content by <span xmlns:cc="http://creativecommons.org/ns#"
+                           property="cc:attributionName"
+                           rel="cc:attributionURL">Norman Hooper</span>
+          is licensed under a
+          <a rel="license"
+             href="http://creativecommons.org/licenses/by-sa/3.0/">Creative
+          Commons Attribution-ShareAlike 3.0 Unported License</a>.
+
+          The source code is released under the
+          <a href="https://www.gnu.org/licenses/agpl.html">GNU Affero General
+          Public License</a>, and is available at
+          <a href="https://github.com/kaapstorm/onepageblog">GitHub</a>.
+
+          The lightbulb icon is by
+          <a href="http://tango.freedesktop.org/The_People">the people from
+          the Tango! project</a>. The favicon is from the
+          <a href="http://www.famfamfam.com/lab/icons/silk/">famfamfam Silk
+          icon set</a> by Mark James.
+        </p>
+"""
+
+TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
+    'onepageblog.posts.context_processors.blog_settings',
+)
 
 # Import local overrides
 try:

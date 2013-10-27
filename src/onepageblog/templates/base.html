@@ -22,22 +22,22 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
     <meta charset="utf-8" />
     <!-- Force latest IE rendering engine & Chrome Frame -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>{% block title %}onepageblog{% endblock %}</title>
+    <title>{% block title %}{{ blog_title }}{% endblock %}</title>
 
     <meta name="description" content="Daily posts with an emphasis on Linux and Python" />
     <meta name="viewport" content="width=device-width; initial-scale=1.0" />
     <!-- Icons -->
     <link rel="shortcut icon" href="{{ MEDIA_URL }}/img/favicon.ico" />
-    <link rel="apple-touch-icon" href="{{ MEDIA_URL }}/img/lightbulb.png" />
+    <link rel="apple-touch-icon" href="{{ MEDIA_URL }}/img/logo.png" />
     <link rel="icon" type="image/png"
-          sizes="114x114" href="{{ MEDIA_URL }}/img/lightbulb_114x114.png" />
+          sizes="114x114" href="{{ MEDIA_URL }}/img/logo_114x114.png" />
     <link rel="icon" type="image/png"
-          sizes="57x57" href="{{ MEDIA_URL }}/img/lightbulb.png" />
+          sizes="57x57" href="{{ MEDIA_URL }}/img/logo.png" />
     <link rel="icon" type="image/vnd.microsoft.icon"
           sizes="16x16" href="{{ MEDIA_URL }}/img/favicon.ico" />
     <!-- Atom feed -->
     <link rel="alternate" type="application/rss+xml; version=2.0"
-          title="onepageblog Atom Feed" href="{% absurl 'feed' %}" />
+          title="{{ blog_title }} RSS 2.0 Feed" href="{% absurl 'feed' %}" />
 
     <script type="text/javascript" src="{{ MEDIA_URL }}/js/jquery-1.6.2.min.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}/js/modernizr-2.0.6.js"></script>
@@ -77,7 +77,7 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 
       <header>
         {% block header %}
-        <h1>onepageblog</h1>
+        <h1>{{ blog_title }}</h1>
         {% endblock %}
       </header>
 
@@ -93,28 +93,7 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
         {% block content %}{% endblock %}
       </div>
 
-      <footer>
-        <p class="blurb">
-          <em><span xmlns:dct="http://purl.org/dc/terms/"
-                    href="http://purl.org/dc/dcmitype/Text"
-                    property="dct:title"
-                    rel="dct:type">onepageblog</span></em>
-          content by <span xmlns:cc="http://creativecommons.org/ns#"
-                           property="cc:attributionName"
-                           rel="cc:attributionURL">Norman Hooper</span>
-          is licensed under a
-          <a rel="license"
-             href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0
-          Unported License</a>.
-
-          The source code is released under the <a href="https://www.gnu.org/licenses/agpl.html">GNU Affero General
-          Public License</a>, and is available at <a href="https://github.com/kaapstorm/onepageblog">GitHub</a>.
-
-          The lightbulb icon is by <a href="http://tango.freedesktop.org/The_People">the people from the Tango!
-          project</a>. The favicon is from the <a href="http://www.famfamfam.com/lab/icons/silk/">famfamfam Silk icon
-          set</a> by Mark James.
-        </p>
-      </footer>
+      <footer>{{ blog_footer|safe }}</footer>
     </div>
   </body>
 </html>

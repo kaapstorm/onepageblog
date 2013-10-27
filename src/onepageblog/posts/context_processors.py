@@ -12,27 +12,11 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
-
-from django.contrib.syndication.views import Feed
-from onepageblog.posts.models import Post
+from django.conf import settings
 
 
-class PostsFeed(Feed):
-    title = "Posts"
-    link = "/"
-
-    @staticmethod
-    def items():
-        return Post.objects.filter(is_published=True).order_by('-created_at')[:10]
-
-    def item_title(self, item):
-        return item.title
-
-    def item_description(self, item):
-        if item.summary:
-            # Should we return only the summary? For now, return everything.
-            return '<blockquote>' + item.summary + '</blockquote>' + item.content
-        return item.content
-
-    def item_link(self, item):
-        return item.get_absolute_url()
+def blog_settings(request):
+    return {
+        'blog_title': settings.BLOG_TITLE,
+        'blog_footer': settings.BLOG_FOOTER
+    }
