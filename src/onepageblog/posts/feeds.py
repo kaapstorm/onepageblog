@@ -29,6 +29,9 @@ class PostsFeed(Feed):
         return item.title
 
     def item_description(self, item):
+        if item.summary:
+            # Should we return only the summary? For now, return everything.
+            return '<blockquote>' + item.summary + '</blockquote>' + item.content
         return item.content
 
     def item_link(self, item):
