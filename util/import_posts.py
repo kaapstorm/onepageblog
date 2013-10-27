@@ -58,6 +58,7 @@ def import_extrange(record, user):
     post = Post(
         title=record[extrange['fields'].index('title')],
         slug=record[extrange['fields'].index('slug')],
+        summary=record[extrange['fields'].index('summary')],
         content_markdown=record[extrange['fields'].index('body')],
         content=record[extrange['fields'].index('body')],
         created_by=user,
@@ -77,6 +78,7 @@ def import_norman(record, user):
     post = Post(
         title=record[norman['fields'].index('title')],
         slug=record[norman['fields'].index('slug')],
+        summary=record[norman['fields'].index('summary')],
         content_markdown=record[norman['fields'].index('body')],
         content=record[norman['fields'].index('body')],
         created_by=user,
