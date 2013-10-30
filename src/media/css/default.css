@@ -43,6 +43,10 @@ h3 {
     margin-top: -0.6em;
 }
 
+blockquote {
+    font-style: italic;
+}
+
 nav {
     font-size: small;
 }

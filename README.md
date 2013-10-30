@@ -15,12 +15,6 @@ Feeds
 An RSS 2.0 feed is available at the url "feed/".
 
 
-Requirements
-------------
-
-  * python-markdown
-
-
 To do
 -----
 

@@ -1,3 +1,4 @@
 *.pyc
+fabfile.py
 src/onepageblog/settings_local.py
 src/onepageblog/sqlite.db
