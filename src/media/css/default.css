@@ -33,13 +33,13 @@ header h1 {
 }
 
 header h1.not-found {
-    background: url({{ MEDIA_URL }}/img/logo_404.png) no-repeat;
+    background: url(../img/logo_404.png) no-repeat;
     padding-left: 57px;
     min-height: 57px;
 }
 
 header h1.server-error {
-    background: url({{ MEDIA_URL }}/img/logo_500.png) no-repeat;
+    background: url(../img/logo_500.png) no-repeat;
     padding-left: 57px;
     min-height: 57px;
 }
