@@ -27,6 +27,9 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 
 {% block content %}
 <div class="list_item_inner">
+  {% if post.summary %}
+    <blockquote>{{ post.summary }}</blockquote>
+  {% endif %}
   {{ post.content|safe }}
 </div>
 <p class="post_link">[<a href="{% url 'post_list_view' %}">List</a>]</p>

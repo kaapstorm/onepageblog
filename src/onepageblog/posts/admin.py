@@ -26,7 +26,14 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ('title', 'content_markdown')
 
     # Detail parameters
-    fields = ('title', 'slug', 'content_markdown', 'created_by', 'created_at', 'is_published', 'published_at')
+    fields = ('title',
+              'slug',
+              'summary',
+              'content_markdown',
+              'created_by',
+              'created_at',
+              'is_published',
+              'published_at')
     prepopulated_fields = {'slug': ('title',)}
     readonly_fields = ('created_at', 'created_by', 'published_at')
 
