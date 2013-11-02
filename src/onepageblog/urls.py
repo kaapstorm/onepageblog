@@ -20,6 +20,7 @@ from django.contrib.auth.views import login, password_change
 
 from onepageblog.posts.feeds import PostsFeed
 from onepageblog.posts.views import PostListView, PostDetailView, add_post, profile, edit_profile, register, logout
+from django.views.generic import RedirectView
 
 
 admin.autodiscover()
@@ -40,6 +41,9 @@ urlpatterns = patterns(
     # Feed URL
     url(r'^feed/rss20.xml$', PostsFeed(),
         name='feed'),
+
+    # Redirect Extrange-style "/blog/post/n/slug/" URLs to "/post/slug/"
+    url(r'^blog/post/\d+/(?P<slug>[\w\-_]+)/$', RedirectView.as_view(url='/post/%(slug)s/')),
 
     # Account URLs
     (r'^accounts/login/$', login),

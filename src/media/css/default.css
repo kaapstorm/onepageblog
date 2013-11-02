@@ -8,7 +8,7 @@
  */
 body {
     margin: 0;
-    text-align: center;    
+    text-align: center;
     color: darkslategray;
     background-color: lightsteelblue;
 }
@@ -28,6 +28,18 @@ h1 a {
 
 header h1 {
     background: url(../img/logo.png) no-repeat;
+    padding-left: 57px;
+    min-height: 57px;
+}
+
+header h1.not-found {
+    background: url(../img/logo_404.png) no-repeat;
+    padding-left: 57px;
+    min-height: 57px;
+}
+
+header h1.server-error {
+    background: url(../img/logo_500.png) no-repeat;
     padding-left: 57px;
     min-height: 57px;
 }
@@ -108,7 +120,8 @@ div.outer {
     border-radius: 3px;
 }
 
-.tip_link {
+.post_link {
     font-size: small;
     color: darkslategray;
 }
+
