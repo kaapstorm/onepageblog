@@ -42,7 +42,9 @@ urlpatterns = patterns(
     url(r'^feed/rss20.xml$', PostsFeed(),
         name='feed'),
 
-    # Redirect Extrange-style "/blog/post/n/slug/" URLs to "/post/slug/"
+    # Redirect "/blog/" to "/"
+    url(r'^blog/$', RedirectView.as_view(url='/')),
+    # Redirect old-style "/blog/post/n/<slug>/" to "/post/<slug>/"
     url(r'^blog/post/\d+/(?P<slug>[\w\-_]+)/$', RedirectView.as_view(url='/post/%(slug)s/')),
 
     # Account URLs
