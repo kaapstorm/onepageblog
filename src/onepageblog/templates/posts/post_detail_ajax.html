@@ -16,12 +16,21 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 
 {% endcomment %}
 {% load absurl %}
+
 <div class="list_item_inner">
   {% if post.summary %}
     <blockquote>{{ post.summary }}</blockquote>
   {% endif %}
   {{ post.content|safe }}
 </div>
+
+<p class="social_link">
+    Share:
+    [<a href="http://www.facebook.com/sharer/sharer.php?u={% absurl 'post_detail_view' slug=post.slug %}"> f</a>]
+    [<a href="https://plus.google.com/share?url={% absurl 'post_detail_view' slug=post.slug %}">g+</a>]
+    [<a href="http://twitter.com/intent/tweet?text={{ post.title }} - {{ blog_title }}: {% absurl 'post_detail_view' slug=post.slug %}">t </a>]
+</p>
+
 <p class="post_link">
   [<a href="{% absurl 'post_detail_view' slug=post.slug %}">Permalink</a>]
 </p>
