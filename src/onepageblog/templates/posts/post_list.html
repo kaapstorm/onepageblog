@@ -41,7 +41,7 @@ $(document).ready(function () {
         <h2>
             <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
         </h2>
-        <h3>{{ post.published_at|date:"l j M Y" }} | {{ post.created_by }}</h3>
+        <h3>{{ post.published_at|date:"D, j M Y" }} | {{ post.created_by }}</h3>
 
         <div class="list_item_outer"></div>
     </div>

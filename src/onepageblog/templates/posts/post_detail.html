@@ -17,14 +17,14 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 
 {% endcomment %}
 {% load absurl %}
-{% load social_share %}
+{% load comments %}
 
 {% block title %}{{ blog_title }} - {{ post.title }}{% endblock %}
 
 {% block header %}
 <h1><a href="{% url 'post_list_view' %}">{{ blog_title }}</a></h1>
 <h2>{{ post.title }}</h2>
-<h3>{{ post.published_at|date:"l j M Y" }} | {{ post.created_by }}</h3>
+<h3>{{ post.published_at|date:"D, j M Y" }} | {{ post.created_by }}</h3>
 {% endblock %}
 
 {% block content %}
@@ -36,11 +36,25 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 </div>
 
 <p class="social_link">
-    Share:
-    [<a href="http://www.facebook.com/sharer/sharer.php?u={% absurl 'post_detail_view' slug=post.slug %}"> f</a>]
-    [<a href="https://plus.google.com/share?url={% absurl 'post_detail_view' slug=post.slug %}">g+</a>]
-    [<a href="http://twitter.com/intent/tweet?text={{ post.title }} - {{ blog_title }}: {% absurl 'post_detail_view' slug=post.slug %}">t </a>]
+  Share:
+  [<a href="http://www.facebook.com/sharer/sharer.php?u={% absurl 'post_detail_view' slug=post.slug %}"> f</a>]
+  [<a href="https://plus.google.com/share?url={% absurl 'post_detail_view' slug=post.slug %}">g+</a>]
+  [<a href="http://twitter.com/intent/tweet?text={{ post.title }} - {{ blog_title }}: {% absurl 'post_detail_view' slug=post.slug %}">t </a>]
 </p>
+
+<p class="post_link">[<a href="{% url 'post_list_view' %}">List</a>]</p>
+
+<p class="comments">
+  <a name="comments"></a>
+  {% render_comment_list for post %}
+</p>
+
+<fieldset>
+  <legend>Your comment</legend>
+    {% with post.get_absolute_url as next %}
+      {% render_comment_form for post %}
+    {% endwith %}
+</fieldset>
 
 <p class="post_link">[<a href="{% url 'post_list_view' %}">List</a>]</p>
 {% endblock %}

@@ -6,6 +6,15 @@
  *      mintcream
  *      darkslategray
  */
+
+a {
+    color: darkmagenta;
+}
+
+blockquote {
+    font-style: italic;
+}
+
 body {
     margin: 0;
     text-align: center;
@@ -13,17 +22,57 @@ body {
     background-color: lightsteelblue;
 }
 
+code {
+    background-color: white;
+    color: black;
+    padding: 5px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid lightsteelblue;
+}
+
+dt {
+    margin-top: 1em;
+}
+
+footer {
+    padding-top: 2em;
+    font-size: small;
+}
+
 h1 {
     color: maroon;
 }
 
-a {
+h2 {
+    font-size: 1.2em;
     color: darkmagenta;
+}
+
+h3 {
+    font-family: sans-serif;
+    font-size: 1em;
+}
+
+h4 {
+    font-family: sans-serif;
+    font-size: 0.9em;
 }
 
 h1 a {
     color: maroon;
     text-decoration: none;
+}
+
+label {
+    display: inline-block;
+    vertical-align: top;
+    width: 8em;
+}
+
+nav {
+    font-size: small;
 }
 
 header h1 {
@@ -42,44 +91,6 @@ header h1.server-error {
     background: url(../img/logo_500.png) no-repeat;
     padding-left: 57px;
     min-height: 57px;
-}
-
-h2 {
-    font-size: 1.2em;
-    color: darkmagenta;
-}
-
-h3 {
-    font-family: sans-serif;
-    font-size: 1em;
-}
-
-h4 {
-    font-family: sans-serif;
-    font-size: 0.9em;
-}
-
-blockquote {
-    font-style: italic;
-}
-
-nav {
-    font-size: small;
-}
-
-footer {
-    padding-top: 2em;
-    font-size: small;
-}
-
-code {
-    background-color: white;
-    color: black;
-    padding: 5px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    border: 1px solid lightsteelblue;
 }
 
 pre code {

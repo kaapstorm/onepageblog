@@ -38,6 +38,9 @@ urlpatterns = patterns(
     url(r'^new/$', add_post,
         name='add_post_view'),
 
+    # Comments URL
+    (r'^comments/', include('django_comments.urls')),
+
     # Feed URL
     url(r'^feed/rss20.xml$', PostsFeed(),
         name='feed'),
