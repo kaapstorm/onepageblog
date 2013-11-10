@@ -1,21 +1,21 @@
-{% extends "comments/base.html" %}
+{% extends "base.html" %}
 {% load i18n %}
-
-{% block title %}{% trans "Preview your comment" %}{% endblock %}
 
 {% block content %}
   {% load comments %}
   <form action="{% comment_form_target %}" method="post">{% csrf_token %}
     {% if next %}<div><input type="hidden" name="next" value="{{ next }}" /></div>{% endif %}
     {% if form.errors %}
-    <h1>{% blocktrans count counter=form.errors|length %}Please correct the error below{% plural %}Please correct the errors below{% endblocktrans %}</h1>
+    <h2>{% blocktrans count counter=form.errors|length %}Please correct the error below{% plural %}Please correct the errors below{% endblocktrans %}</h2>
     {% else %}
-    <h1>{% trans "Preview your comment" %}</h1>
-      <blockquote>{{ comment|linebreaks }}</blockquote>
+    <h2>{% trans "Preview your comment" %}</h2>
+      <div class="list_item_inner">{{ comment|linebreaks }}</div>
       <p>
       {% trans "and" %} <input type="submit" name="submit" class="submit-post" value="{% trans "Post your comment" %}" id="submit" /> {% trans "or make changes" %}:
       </p>
     {% endif %}
+      <fieldset>
+          <legend>Your comment</legend>
     {% for field in form %}
       {% if field.is_hidden %}
         <div>{{ field }}</div>
@@ -32,5 +32,6 @@
     <input type="submit" name="submit" class="submit-post" value="{% trans "Post" %}" />
     <input type="submit" name="preview" class="submit-preview" value="{% trans "Preview" %}" />
     </p>
+      </fieldset>
   </form>
 {% endblock %}

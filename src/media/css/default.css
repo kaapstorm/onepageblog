@@ -11,10 +11,6 @@ a {
     color: darkmagenta;
 }
 
-blockquote {
-    font-style: italic;
-}
-
 body {
     margin: 0;
     text-align: center;
@@ -133,6 +129,10 @@ div.outer {
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
+}
+
+.list_item_inner blockquote {
+    font-style: italic;
 }
 
 .post_link {
