@@ -138,6 +138,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'django.contrib.admin',
+    'django_comments',
 
     'onepageblog.posts',
     'onepageblog.posts.templatetags',
