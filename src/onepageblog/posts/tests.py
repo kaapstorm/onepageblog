@@ -46,3 +46,9 @@ class TestViews(TestCase):
 # TODO: Test user views
 
 # TODO: Test feed
+
+# TODO: Test only members of  Moderators group can preview unpublished posts
+
+# TODO: Comments notification e-mails
+
+# TODO: Test comment feeds & add comments feeds
