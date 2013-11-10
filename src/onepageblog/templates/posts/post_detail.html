@@ -16,6 +16,8 @@ You should have received a copy of the GNU General Public License
 along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 
 {% endcomment %}
+{% load absurl %}
+{% load social_share %}
 
 {% block title %}{{ blog_title }} - {{ post.title }}{% endblock %}
 
@@ -32,5 +34,13 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
   {% endif %}
   {{ post.content|safe }}
 </div>
+
+<p class="social_link">
+    Share:
+    [<a href="http://www.facebook.com/sharer/sharer.php?u={% absurl 'post_detail_view' slug=post.slug %}"> f</a>]
+    [<a href="https://plus.google.com/share?url={% absurl 'post_detail_view' slug=post.slug %}">g+</a>]
+    [<a href="http://twitter.com/intent/tweet?text={{ post.title }} - {{ blog_title }}: {% absurl 'post_detail_view' slug=post.slug %}">t </a>]
+</p>
+
 <p class="post_link">[<a href="{% url 'post_list_view' %}">List</a>]</p>
 {% endblock %}
