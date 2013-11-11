@@ -141,12 +141,14 @@ div.outer {
 }
 
 .social_link {
-    font-size: small;
     font-weight: bold;
-    color: darkslategray;
 }
 
 .social_link a {
     font-size: medium;
     font-family: monospace;
+}
+
+.comment_link {
+    font-size: small;
 }
