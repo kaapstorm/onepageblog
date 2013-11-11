@@ -1,0 +1,26 @@
+{% comment %}
+This file is part of onepageblog.
+
+onepageblog is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+onepageblog is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
+
+{% endcomment %}
+{% load absurl %}
+
+<span class="social_link">
+  Share:
+  [<a href="http://www.facebook.com/sharer/sharer.php?u={% absurl 'post_detail_view' slug=post.slug %}"> f</a>]
+  [<a href="https://plus.google.com/share?url={% absurl 'post_detail_view' slug=post.slug %}">g+</a>]
+  [<a href="http://www.linkedin.com/shareArticle?mini=true&url={% absurl 'post_detail_view' slug=post.slug %}&title={{ post.title|urlencode }}&source={{ blog_title|urlencode }}">in</a>]
+  [<a href="http://twitter.com/intent/tweet?text={{ post.title|urlencode }}—{{ blog_title|urlencode }}—{% absurl 'post_detail_view' slug=post.slug %}">t </a>]
+</span>
