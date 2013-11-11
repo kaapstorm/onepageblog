@@ -19,13 +19,15 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 
 <span class="social_link">
   Share:
+  [<a href="mailto:?subject={{ post.title|urlencode }}%20-%20{{ blog_title|urlencode }}&amp;body={% absurl 'post_detail_view' slug=post.slug %}"
+      title="E-mail"><span style="font-size: 2em;">&#x2709;</span></a>]
   [<a href="http://www.facebook.com/sharer/sharer.php?u={% absurl 'post_detail_view' slug=post.slug %}"
       rel="nofollow"
       title="Facebook"> f</a>]
   [<a href="https://plus.google.com/share?url={% absurl 'post_detail_view' slug=post.slug %}"
       rel="nofollow"
       title="Google+">g+</a>]
-  [<a href="http://www.linkedin.com/shareArticle?mini=true&url={% absurl 'post_detail_view' slug=post.slug %}&title={{ post.title|urlencode }}&source={{ blog_title|urlencode }}"
+  [<a href="http://www.linkedin.com/shareArticle?mini=true&amp;url={% absurl 'post_detail_view' slug=post.slug %}&amp;title={{ post.title|urlencode }}&amp;source={{ blog_title|urlencode }}"
       rel="nofollow"
       title="LinkedIn">in</a>]
   [<a href="http://twitter.com/intent/tweet?text={{ post.title|urlencode }}—{{ blog_title|urlencode }}—{% absurl 'post_detail_view' slug=post.slug %}"
