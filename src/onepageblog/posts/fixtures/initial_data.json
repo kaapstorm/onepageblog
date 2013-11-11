@@ -1,0 +1,21 @@
+[
+  {
+    "pk": 1,
+    "model": "auth.group",
+    "fields": {
+      "name": "Moderators",
+      "permissions": [
+        22,
+        25,
+        23,
+        24,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31
+      ]
+    }
+  }
+]
