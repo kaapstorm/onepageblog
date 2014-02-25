@@ -42,6 +42,8 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     is_published = models.BooleanField(default=False)
     published_at = models.DateTimeField(null=True)
+    # TODO: Allow comments to be enabled and disabled
+    # comments_enabled = models.BooleanField(default=True)
 
     def __unicode__(self):
         return self.title
@@ -91,8 +93,12 @@ class Post(models.Model):
 
 class PostModerator(CommentModerator):
     email_notification = True
-    auto_close_field = 'published_at'
+    #enable_field = 'comments_enabled'
+    auto_moderate_field = 'published_at'
+    moderate_after = 0
     # Close the comments after a year.
+    auto_close_field = 'published_at'
     close_after = 365
 
 moderator.register(Post, PostModerator)
+
