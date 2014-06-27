@@ -15,6 +15,7 @@
 
 from django.conf import settings
 from django.conf.urls import patterns, include, url
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.views import login, password_change
 
@@ -63,9 +64,4 @@ urlpatterns = patterns(
 )
 
 if settings.DEBUG:
-    # Serve media when developing
-    urlpatterns += patterns(
-        '',
-        (r'^media/(?P<path>.*)$', 'django.views.static.serve',
-         {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
-    )
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
