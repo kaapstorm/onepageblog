@@ -24,8 +24,8 @@ from django.template import Context, loader, RequestContext
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import ListView, DetailView
 
-from onepageblog.posts.forms import PostForm, UserChangeForm
-from onepageblog.posts.models import Post
+from posts.forms import PostForm, UserChangeForm
+from posts.models import Post
 
 
 class PostListView(ListView):

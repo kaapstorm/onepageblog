@@ -18,7 +18,7 @@ from django.contrib.auth.models import User
 from django.forms import ModelForm
 from django.template.defaultfilters import slugify
 
-from onepageblog.posts.models import Post
+from posts.models import Post
 
 
 class PostForm(ModelForm):

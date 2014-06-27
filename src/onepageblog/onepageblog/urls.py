@@ -18,8 +18,8 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.contrib.auth.views import login, password_change
 
-from onepageblog.posts.feeds import PostsFeed
-from onepageblog.posts.views import PostListView, PostDetailView, add_post, profile, edit_profile, register, logout
+from posts.feeds import PostsFeed
+from posts.views import PostListView, PostDetailView, add_post, profile, edit_profile, register, logout
 from django.views.generic import RedirectView
 
 
@@ -37,9 +37,6 @@ urlpatterns = patterns(
         name='post_detail_ajax_view'),
     url(r'^new/$', add_post,
         name='add_post_view'),
-
-    # Comments URL
-    (r'^comments/', include('django_comments.urls')),
 
     # Feed URL
     url(r'^feed/rss20.xml$', PostsFeed(),

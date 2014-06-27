@@ -42,6 +42,18 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
     <script type="text/javascript" src="{{ MEDIA_URL }}/js/jquery-1.6.2.min.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}/js/modernizr-2.0.6.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}/js/onepageblog.js"></script>
+
+    <script type="text/javascript">
+    var disqus_shortname = '{{ disqus_shortname }}';
+
+    (function () {
+      var s = document.createElement('script'); s.async = true;
+      s.type = 'text/javascript';
+      s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+      (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+    </script> 
+
     {% block script %}{% endblock %}
 
     <link rel="stylesheet" type="text/css" media="screen"
@@ -66,11 +78,11 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
       <nav id="accounts_nav">
         {% if user.is_authenticated %}
         You are logged in as
-        <a href="{% url 'onepageblog.posts.views.profile' %}">{{ user }}</a> |
-        [<a href="{% url 'onepageblog.posts.views.logout' %}">Logout</a>]
+        <a href="{% url 'posts.views.profile' %}">{{ user }}</a> |
+        [<a href="{% url 'posts.views.logout' %}">Logout</a>]
         {% else %}
         [<a href="{% url 'django.contrib.auth.views.login' %}?next={% url 'post_list_view' %}">Login</a>]
-        [<a href="{% url 'onepageblog.posts.views.register' %}">Register</a>]
+        [<a href="{% url 'posts.views.register' %}">Register</a>]
         {% endif %}
         [<a href="{% absurl 'feed' %}">Feed</a>]
       </nav>

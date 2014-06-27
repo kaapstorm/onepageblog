@@ -20,7 +20,6 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
-from django_comments.moderation import CommentModerator, moderator
 
 
 class Post(models.Model):
@@ -89,16 +88,3 @@ class Post(models.Model):
 
     class Meta:
         ordering = ['-created_at']
-
-
-class PostModerator(CommentModerator):
-    email_notification = True
-    #enable_field = 'comments_enabled'
-    auto_moderate_field = 'published_at'
-    moderate_after = 0
-    # Close the comments after a year.
-    auto_close_field = 'published_at'
-    close_after = 365
-
-moderator.register(Post, PostModerator)
-

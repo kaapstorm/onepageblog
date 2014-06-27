@@ -1,8 +1,8 @@
 *.pyc
 fabfile.py
 ve2.7
-ve3.3
-src/onepageblog/settings_local.py
+venv3
+src/onepageblog/onepageblog/settings_local.py
 src/onepageblog/sqlite.db
 doc/_build
 .idea/

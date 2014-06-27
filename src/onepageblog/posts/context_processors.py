@@ -18,5 +18,6 @@ from django.conf import settings
 def blog_settings(request):
     return {
         'blog_title': settings.BLOG_TITLE,
-        'blog_footer': settings.BLOG_FOOTER
+        'blog_footer': settings.BLOG_FOOTER,
+        'disqus_shortname': settings.DISQUS_SHORTNAME
     }

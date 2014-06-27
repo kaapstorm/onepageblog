@@ -16,7 +16,6 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 
 {% endcomment %}
 {% load absurl %}
-{% load comments %}
 
 <div class="list_item_inner">
   {% if post.summary %}
@@ -31,11 +30,5 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 </p>
 
 <p class="comment_link">
-  {% get_comment_count for post as comment_count %}
-  {% if comment_count %}
-    <a href="{% absurl 'post_detail_view' slug=post.slug %}#comments">This post has {{ comment_count }}
-    comment{{ comment_count|pluralize }}</a>
-  {% else %}
-    <a href="{% absurl 'post_detail_view' slug=post.slug %}#comments">Be the first to comment on this post</a>
-  {% endif %}
+  <a href="{% absurl 'post_detail_view' slug=post.slug %}#disqus_thread">Comments</a>
 </p>
