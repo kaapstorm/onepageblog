@@ -63,4 +63,14 @@ urlpatterns = patterns(
 )
 
 if settings.DEBUG:
+    # From the `Django 1.6 documentation <https://docs.djangoproject.com/en/1.6/howto/static-files/>`_:
+    #
+    # .. NOTE:: [The `static`] helper function works only in debug mode and
+    #           only if the given prefix is local (e.g. /static/) and not a
+    #           URL (e.g. http://static.example.com/).
+    #
+    #           Also this helper function only serves the actual STATIC_ROOT
+    #           folder; it doesn't perform static files discovery like
+    #           django.contrib.staticfiles.
+    #
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -15,6 +15,7 @@ You should have received a copy of the GNU General Public License
 along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 
 {% endcomment %}
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -27,31 +28,31 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 
     <meta name="viewport" content="width=device-width; initial-scale=1.0" />
     <!-- Icons -->
-    <link rel="shortcut icon" href="{{ MEDIA_URL }}/img/favicon.ico" />
-    <link rel="apple-touch-icon" href="{{ MEDIA_URL }}/img/logo.png" />
+    <link rel="shortcut icon" href="{% static "onepageblog/img/favicon.ico" %}" />
+    <link rel="apple-touch-icon" href="{% static "onepageblog/img/logo.png" %}" />
     <link rel="icon" type="image/png"
-          sizes="114x114" href="{{ MEDIA_URL }}/img/logo_114x114.png" />
+          sizes="114x114" href="{% static "onepageblog/img/logo_114x114.png" %}" />
     <link rel="icon" type="image/png"
-          sizes="57x57" href="{{ MEDIA_URL }}/img/logo.png" />
+          sizes="57x57" href="{% static "onepageblog/img/logo.png" %}" />
     <link rel="icon" type="image/vnd.microsoft.icon"
-          sizes="16x16" href="{{ MEDIA_URL }}/img/favicon.ico" />
+          sizes="16x16" href="{% static "onepageblog/img/favicon.ico" %}" />
 
     <link rel="stylesheet" type="text/css" media="screen"
-          href="{{ MEDIA_URL }}/css/default.css" />
+          href="{% static "onepageblog/css/default.css" %}" />
     <link rel="stylesheet" type="text/css"
           media="screen and (max-device-width: 1024px) and (orientation: portrait)"
-          href="{{ MEDIA_URL }}/css/ipad-portrait.css" />
+          href="{% static "onepageblog/css/ipad-portrait.css" %}" />
     <link rel="stylesheet" type="text/css"
           media="screen and (max-device-width: 1024px) and (orientation: landscape)"
-          href="{{ MEDIA_URL }}/css/ipad-landscape.css" />
+          href="{% static "onepageblog/css/ipad-landscape.css" %}" />
     <link rel="stylesheet" type="text/css"
           media="screen and (max-device-width: 533px)"
-          href="{{ MEDIA_URL }}/css/htc_desire.css" />
+          href="{% static "onepageblog/css/htc_desire.css" %}" />
     <link rel="stylesheet" type="text/css"
           media="screen and (max-device-width: 480px)"
-          href="{{ MEDIA_URL }}/css/iphone.css" />
+          href="{% static "onepageblog/css/iphone.css" %}" />
     <link rel="stylesheet" type="text/css" media="handheld"
-          href="{{ MEDIA_URL }}/css/handheld.css" />
+          href="{% static "onepageblog/css/handheld.css" %}" />
   </head>
   <body>
     <div class="outer">
