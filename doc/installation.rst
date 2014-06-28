@@ -6,13 +6,13 @@ initial database entries. ::
 
     $ git clone https://github.com/kaapstorm/onepageblog.git
     $ cd src/onepageblog/
-    $ cp setings.py settings_local.py
+    $ cp settings.py settings_local.py
     $ vim settings_local.py
     $ python manage.py syncdb
 
 settings_local.py does not need all the settings that are configured in 
 settings.py, just those settings you want to override. These will include 
-DATABASES, SECRET_KEY, TEMPLATE_DIRS, MEDIA_ROOT, BLOG_TITLE and BLOG_FOOTER.
+DATABASES, SECRET_KEY, TEMPLATE_DIRS, STATIC_ROOT, BLOG_TITLE and BLOG_FOOTER.
 For more information, see the `Django settings`_ documentation.
 
 When you have finished, how you need to deploy your blog will depend on your 
