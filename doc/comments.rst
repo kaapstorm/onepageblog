@@ -1,7 +1,7 @@
 Comments
 ========
 
-*onepageblog* uses `Django comments`_.
+*onepageblog* uses `Disqus comments`_. Comments can be disabled.
 
 
-.. _Django comments: http://django-contrib-comments.readthedocs.org/en/latest/
+.. _Disqus comments: https://disqus.com/
