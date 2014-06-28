@@ -38,6 +38,7 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
   {% include "posts/social_links.html" %}
 </p>
 
+{% if disqus_shortname %}
 <p class="comments">
   <div id="disqus_thread"></div>
   <script type="text/javascript">
@@ -56,6 +57,7 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
     <a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a>.
   </noscript>
 </p>
+{% endif %}
 
 <p class="post_link">[<a href="{% url 'post_list_view' %}">Back To List</a>]</p>
 {% endblock %}

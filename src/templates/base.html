@@ -44,6 +44,7 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
     <script type="text/javascript" src="{% static "onepageblog/js/modernizr-2.0.6.js" %}"></script>
     <script type="text/javascript" src="{% static "onepageblog/js/onepageblog.js" %}"></script>
 
+    {% if disqus_shortname %}
     <script type="text/javascript">
     var disqus_shortname = '{{ disqus_shortname }}';
 
@@ -53,7 +54,8 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
       s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
       (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
-    </script> 
+    </script>
+    {% endif %}
 
     {% block script %}{% endblock %}
 

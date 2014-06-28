@@ -132,7 +132,8 @@ TEMPLATE_DIRS = (BASE_DIR + '/templates/',)
 
 SITE_ID = 1
 
-# Disqus website shortname for Disqus comments
+# Disqus website shortname for Disqus comments.
+# Set "DISQUS_SHORTNAME = None" to disable Disqus comments.
 DISQUS_SHORTNAME = 'onepageblog'
 
 # Disallow raw HTML in posts. Valid values are of "remove", "replace" or
