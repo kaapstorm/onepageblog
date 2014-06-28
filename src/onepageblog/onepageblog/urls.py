@@ -18,10 +18,9 @@ from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.views import login, password_change
-
+from django.views.generic import RedirectView
 from posts.feeds import PostsFeed
 from posts.views import PostListView, PostDetailView, add_post, profile, edit_profile, register, logout
-from django.views.generic import RedirectView
 
 
 admin.autodiscover()

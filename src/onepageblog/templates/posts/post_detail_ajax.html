@@ -25,10 +25,7 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 </div>
 
 <p class="post_link">
-  [<a href="{% absurl 'post_detail_view' slug=post.slug %}">Permalink</a>] |
+  [<a href="{% absurl 'post_detail_view' slug=post.slug %}">Permalink</a>]
+  [<a href="{% absurl 'post_detail_view' slug=post.slug %}#disqus_thread">Comment</a>] |
   {% include "posts/social_links.html" %}
-</p>
-
-<p class="comment_link">
-  <a href="{% absurl 'post_detail_view' slug=post.slug %}#disqus_thread">Comments</a>
 </p>
