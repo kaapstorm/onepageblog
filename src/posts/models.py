@@ -44,8 +44,8 @@ class Post(models.Model):
     # TODO: Allow comments to be enabled and disabled
     # comments_enabled = models.BooleanField(default=True)
 
-    def __unicode__(self):
-        return self.title
+    def __str__(self):
+        return str(self.title)
 
     def get_absolute_url(self):
         return reverse('post_detail_view', kwargs={'slug': self.slug})
