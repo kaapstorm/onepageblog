@@ -1,7 +1,5 @@
 *.pyc
 fabfile.py
-ve2.7
-venv3
 src/onepageblog/settings_local.py
 src/db.sqlite3
 doc/_build
