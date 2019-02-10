@@ -12,65 +12,71 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
-
 from django.conf import settings
-from django.conf.urls import patterns, include, url
-from django.conf.urls.static import static
+from django.conf.urls import include
 from django.contrib import admin
-from django.contrib.auth.views import login, password_change
+from django.contrib.auth import (
+    urls as auth_urls,
+    views as auth_views,
+)
+from django.urls import path, re_path, reverse_lazy
 from django.views.generic import RedirectView
+from django.views.static import serve
+
 from posts.feeds import PostsFeed
-from posts.views import PostListView, PostDetailView, add_post, profile, edit_profile, register, logout
+from posts.views import (
+    PostListView,
+    PostDetailView,
+    add_post,
+    profile,
+    edit_profile,
+    register,
+    logout
+)
 
 
 admin.autodiscover()
 
-urlpatterns = patterns(
-    '',
+
+urlpatterns = [
     # Post URLs
-    url(r'^$', PostListView.as_view(),
-        name='post_list_view'),
-    url(r'^post/(?P<slug>[\w\-_]+)/$', PostDetailView.as_view(),
-        name='post_detail_view'),
-    url(r'^post/(?P<slug>[\w\-_]+)/ajax/$',
-        PostDetailView.as_view(template_name='posts/post_detail_ajax.html'),
-        name='post_detail_ajax_view'),
-    url(r'^new/$', add_post,
-        name='add_post_view'),
+    path('', PostListView.as_view(), name='post_list_view'),
+    path('post/<slug:slug>/', PostDetailView.as_view(),
+         name='post_detail_view'),
+    path('post/<slug:slug>/ajax/',
+         PostDetailView.as_view(template_name='posts/post_detail_ajax.html'),
+         name='post_detail_ajax_view'),
+    path('new/', add_post, name='add_post_view'),
 
     # Feed URL
-    url(r'^feed/rss20.xml$', PostsFeed(),
-        name='feed'),
+    path('feed/rss20.xml', PostsFeed(), name='feed'),
 
     # Redirect "/blog/" to "/"
-    url(r'^blog/$', RedirectView.as_view(url='/')),
+    path('blog/', RedirectView.as_view(url='/')),
     # Redirect old-style "/blog/post/n/<slug>/" to "/post/<slug>/"
-    url(r'^blog/post/\d+/(?P<slug>[\w\-_]+)/$', RedirectView.as_view(url='/post/%(slug)s/')),
+    re_path(r'^blog/post/\d+/(?P<slug>[\w\-_]+)/$',
+            RedirectView.as_view(url='/post/%(slug)s/')),
 
     # Account URLs
-    (r'^accounts/login/$', login),
-    (r'^accounts/logout/$', logout),
-    (r'^accounts/register/$', register),
-    (r'^accounts/profile/$', profile),
-    url(r'^accounts/edit/$', edit_profile,
-        name='edit_profile_view'),
-    url(r'^accounts/passwd/$', password_change,
-        name='password_change_view',
-        kwargs={'post_change_redirect': '../../'}),
+    path('accounts/login/', auth_views.LoginView.as_view()),
+    path('accounts/logout/', logout),
+    path('accounts/register/', register),
+    path('accounts/profile/', profile),
+    path('accounts/edit/', edit_profile, name='edit_profile_view'),
+    path('accounts/passwd/',
+         auth_views.PasswordChangeView.as_view(
+             success_url=reverse_lazy('post_list_view')
+         ),
+         name='password_change_view'),
+    path('accounts/', include(auth_urls)),
 
     # Admin URL
-    (r'^admin/', include(admin.site.urls)),
-)
+    path('admin/', admin.site.urls),
+]
 
-if settings.DEBUG:
-    # From the `Django 1.6 documentation <https://docs.djangoproject.com/en/1.6/howto/static-files/>`_:
-    #
-    # .. NOTE:: [The `static`] helper function works only in debug mode and
-    #           only if the given prefix is local (e.g. /static/) and not a
-    #           URL (e.g. http://static.example.com/).
-    #
-    #           Also this helper function only serves the actual STATIC_ROOT
-    #           folder; it doesn't perform static files discovery like
-    #           django.contrib.staticfiles.
-    #
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+if settings.DEBUG :
+    urlpatterns += [
+        re_path(r'^media/(?P<path>.*)$', serve, {
+            'document_root': settings.MEDIA_ROOT,
+        }),
+    ]

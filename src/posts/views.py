@@ -17,10 +17,10 @@ from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.core.mail import mail_managers
-from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
-from django.template import Context, loader, RequestContext
+from django.shortcuts import render
+from django.template import Context, loader
+from django.urls import reverse
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import ListView, DetailView
 
@@ -35,8 +35,11 @@ class PostListView(ListView):
         """If the user is a member of the Moderators group, show all posts,
         otherwise just show published posts.
         """
-        if self.request.user.is_authenticated() \
-                and self.request.user.groups.filter(name='Moderators').count():
+        if (
+                hasattr(self.request, 'user') and
+                self.request.user.is_authenticated() and
+                self.request.user.groups.filter(name='Moderators').count()
+        ):
             return Post.objects.all()
         return Post.objects.filter(is_published=True)
 
@@ -47,8 +50,11 @@ class PostDetailView(DetailView):
     def get_queryset(self):
         """Allow moderators to see unpublished posts.
         """
-        if self.request.user.is_authenticated() \
-                and self.request.user.groups.filter(name='Moderators').count():
+        if (
+                hasattr(self.request, 'user') and
+                self.request.user.is_authenticated() and
+                self.request.user.groups.filter(name='Moderators').count()
+        ):
             return Post.objects.all()
         return Post.objects.filter(is_published=True)
 
@@ -66,9 +72,7 @@ def register(request):
             return HttpResponseRedirect(reverse('post_list_view'))
     else:
         form = UserCreationForm()
-    return render_to_response("registration/register.html", 
-                              {'form': form},
-                              context_instance=RequestContext(request))
+    return render(request, "registration/register.html", {'form': form})
 
 
 def logout(request):
@@ -104,15 +108,12 @@ def add_post(request):
             return HttpResponseRedirect(reverse('post_list_view'))
     else:
         form = PostForm()
-    return render_to_response('posts/post_add.html',
-                              {'form': form},
-                              context_instance=RequestContext(request))
+    return render(request, 'posts/post_add.html', {'form': form})
 
 
 @login_required
 def profile(request):
-    return render_to_response('registration/profile.html', {},
-                              context_instance=RequestContext(request))
+    return render(request, 'registration/profile.html')
 
 
 @login_required
@@ -125,6 +126,4 @@ def edit_profile(request):
             return HttpResponseRedirect(reverse('post_list_view'))
     else:
         form = UserChangeForm(instance=request.user)
-    return render_to_response('registration/edit_profile.html',
-                              {'form': form},
-                              context_instance=RequestContext(request))
+    return render(request, 'registration/edit_profile.html', {'form': form})

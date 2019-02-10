@@ -12,14 +12,21 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
+
 from datetime import datetime
 import re
 import markdown
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
+from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
+
+
+def get_sentinel_user():
+    # https://docs.djangoproject.com/en/2.1/ref/models/fields/#django.db.models.SET
+    return User.objects.get_or_create(username='deleted')[0]
 
 
 class Post(models.Model):
@@ -34,10 +41,14 @@ class Post(models.Model):
     slug = models.SlugField(max_length=255, unique=True)
     summary = models.CharField(max_length=255, blank=True)
     content_markdown = models.TextField(
-        verbose_name='Content (Markdown-formatted)',
-        help_text='Use <a href="http://daringfireball.net/projects/markdown/">Markdown</a> syntax')
+        verbose_name=_('Content (Markdown-formatted)'),
+        help_text=_(
+            'Use <a href="http://daringfireball.net/projects/markdown/">'
+            'Markdown</a> syntax'
+        )
+    )
     content = models.TextField()
-    created_by = models.ForeignKey(User)
+    created_by = models.ForeignKey(User, models.SET(get_sentinel_user))
     created_at = models.DateTimeField(auto_now_add=True)
     is_published = models.BooleanField(default=False)
     published_at = models.DateTimeField(null=True)
@@ -55,28 +66,24 @@ class Post(models.Model):
         Converts markdown to safe HTML, creates unique slug, and sets the
         published_at timestamp.
         """
-        # Convert Markdown to safe HTML
-        # Useful: https://code.djangoproject.com/wiki/UsingMarkup
-        # See also:
-        # http://pypi.python.org/pypi/django-markupfield/
-        # http://www.freewisdom.org/projects/python-markdown/CodeHilite
-        # Enable extra features. Escape tags.
-        self.content = markdown.markdown(self.content_markdown, ['extra'],
-                                         safe_mode=settings.MARKDOWN_SAFE_MODE)
+        # Convert Markdown to safe HTML. Enable extra features. Escape tags.
+        self.content = markdown.markdown(
+            self.content_markdown,
+            extensions=['extra'],
+            safe_mode=settings.MARKDOWN_SAFE_MODE
+        )
 
         # Create unique slug
         # Check slug is unique
-        if self.slug is None or len(self.slug) == 0:
+        if not self.slug:
             # self.slug will be None if the post was created using PostForm
-            self.slug = slugify(self.title)
-        if len(self.slug) == 0:
-            # If the title has no alphanumeric characters, slug will be empty
-            self.slug = 'x'
+            # If the title has no alphanumeric characters, slugify will be empty
+            self.slug = slugify(self.title) or 'x'
         # Strip off any final digits
         match = re.match('(.+?)(?:-\d+)?$', self.slug)
         initial_slug = match.group(1)
         serial = 1
-        while Post.objects.exclude(id=self.id).filter(slug=self.slug).count() > 0:
+        while Post.objects.exclude(pk=self.pk).filter(slug=self.slug).count() > 0:
             serial += 1
             self.slug = '%s-%s' % (initial_slug, serial)
 
