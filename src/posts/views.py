@@ -19,7 +19,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.mail import mail_managers
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.template import Context, loader
+from django.template import loader
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import ListView, DetailView
@@ -37,7 +37,7 @@ class PostListView(ListView):
         """
         if (
                 hasattr(self.request, 'user') and
-                self.request.user.is_authenticated() and
+                self.request.user.is_authenticated and
                 self.request.user.groups.filter(name='Moderators').count()
         ):
             return Post.objects.all()
@@ -52,7 +52,7 @@ class PostDetailView(DetailView):
         """
         if (
                 hasattr(self.request, 'user') and
-                self.request.user.is_authenticated() and
+                self.request.user.is_authenticated and
                 self.request.user.groups.filter(name='Moderators').count()
         ):
             return Post.objects.all()
@@ -95,7 +95,7 @@ def add_post(request):
             post.created_by = request.user
             post.save()
             # Notify managers of new submission
-            c = Context({'post': post})
+            c = {'post': post}
             t = loader.get_template('posts/post_email.txt')
             text_message = t.render(c)
             t = loader.get_template('posts/post_email.html')

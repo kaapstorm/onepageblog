@@ -40,13 +40,18 @@ admin.autodiscover()
 
 urlpatterns = [
     # Post URLs
-    path('', PostListView.as_view(), name='post_list_view'),
-    path('post/<slug:slug>/', PostDetailView.as_view(),
+    path('',
+         PostListView.as_view(),
+         name='post_list_view'),
+    path('post/<slug:slug>/',
+         PostDetailView.as_view(),
          name='post_detail_view'),
     path('post/<slug:slug>/ajax/',
          PostDetailView.as_view(template_name='posts/post_detail_ajax.html'),
          name='post_detail_ajax_view'),
-    path('new/', add_post, name='add_post_view'),
+    path('new/',
+         add_post,
+         name='add_post_view'),
 
     # Feed URL
     path('feed/rss20.xml', PostsFeed(), name='feed'),
@@ -58,10 +63,10 @@ urlpatterns = [
             RedirectView.as_view(url='/post/%(slug)s/')),
 
     # Account URLs
-    path('accounts/login/', auth_views.LoginView.as_view()),
-    path('accounts/logout/', logout),
-    path('accounts/register/', register),
-    path('accounts/profile/', profile),
+    path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
+    path('accounts/logout/', logout, name='logout'),
+    path('accounts/register/', register, name='register'),
+    path('accounts/profile/', profile, name='profile'),
     path('accounts/edit/', edit_profile, name='edit_profile_view'),
     path('accounts/passwd/',
          auth_views.PasswordChangeView.as_view(

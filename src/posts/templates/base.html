@@ -28,21 +28,21 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
     <meta name="description" content="{% block description %}{% endblock %}" />
     <meta name="viewport" content="width=device-width; initial-scale=1.0" />
     <!-- Icons -->
-    <link rel="shortcut icon" href="{% static "onepageblog/img/favicon.ico" %}" />
-    <link rel="apple-touch-icon" href="{% static "onepageblog/img/logo.png" %}" />
+    <link rel="shortcut icon" href="{% static 'onepageblog/img/favicon.ico' %}" />
+    <link rel="apple-touch-icon" href="{% static 'onepageblog/img/logo.png' %}" />
     <link rel="icon" type="image/png"
-          sizes="114x114" href="{% static "onepageblog/img/logo_114x114.png" %}" />
+          sizes="114x114" href="{% static 'onepageblog/img/logo_114x114.png' %}" />
     <link rel="icon" type="image/png"
-          sizes="57x57" href="{% static "onepageblog/img/logo.png" %}" />
+          sizes="57x57" href="{% static 'onepageblog/img/logo.png' %}" />
     <link rel="icon" type="image/vnd.microsoft.icon"
-          sizes="16x16" href="{% static "onepageblog/img/favicon.ico" %}" />
+          sizes="16x16" href="{% static 'onepageblog/img/favicon.ico' %}" />
     <!-- Atom feed -->
     <link rel="alternate" type="application/rss+xml; version=2.0"
           title="{{ blog_title }} RSS 2.0 Feed" href="{% absurl 'feed' %}" />
 
-    <script type="text/javascript" src="{% static "onepageblog/js/jquery-1.6.2.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "onepageblog/js/modernizr-2.0.6.js" %}"></script>
-    <script type="text/javascript" src="{% static "onepageblog/js/onepageblog.js" %}"></script>
+    <script type="text/javascript" src="{% static 'onepageblog/js/jquery-1.6.2.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'onepageblog/js/modernizr-2.0.6.js' %}"></script>
+    <script type="text/javascript" src="{% static 'onepageblog/js/onepageblog.js' %}"></script>
 
     {% if disqus_shortname %}
     <script type="text/javascript">
@@ -60,32 +60,32 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
     {% block script %}{% endblock %}
 
     <link rel="stylesheet" type="text/css" media="screen"
-          href="{% static "onepageblog/css/default.css" %}" />
+          href="{% static 'onepageblog/css/default.css' %}" />
     <link rel="stylesheet" type="text/css"
           media="screen and (max-device-width: 1024px) and (orientation: portrait)"
-          href="{% static "onepageblog/css/ipad-portrait.css" %}" />
+          href="{% static 'onepageblog/css/ipad-portrait.css' %}" />
     <link rel="stylesheet" type="text/css"
           media="screen and (max-device-width: 1024px) and (orientation: landscape)"
-          href="{% static "onepageblog/css/ipad-landscape.css" %}" />
+          href="{% static 'onepageblog/css/ipad-landscape.css' %}" />
     <link rel="stylesheet" type="text/css"
           media="screen and (max-device-width: 533px)"
-          href="{% static "onepageblog/css/htc_desire.css" %}" />
+          href="{% static 'onepageblog/css/htc_desire.css' %}" />
     <link rel="stylesheet" type="text/css"
           media="screen and (max-device-width: 480px)"
-          href="{% static "onepageblog/css/iphone.css" %}" />
+          href="{% static 'onepageblog/css/iphone.css' %}" />
     <link rel="stylesheet" type="text/css" media="handheld"
-          href="{% static "onepageblog/css/handheld.css" %}" />
+          href="{% static 'onepageblog/css/handheld.css' %}" />
   </head>
   <body>
     <div class="outer">
       <nav id="accounts_nav">
         {% if user.is_authenticated %}
         You are logged in as
-        <a href="{% url 'posts.views.profile' %}">{{ user }}</a> |
-        [<a href="{% url 'posts.views.logout' %}">Logout</a>]
+        <a href="{% url 'profile' %}">{{ user }}</a> |
+        [<a href="{% url 'logout' %}">Logout</a>]
         {% else %}
-        [<a href="{% url 'django.contrib.auth.views.login' %}?next={% url 'post_list_view' %}">Login</a>]
-        [<a href="{% url 'posts.views.register' %}">Register</a>]
+        [<a href="{% url 'login' %}?next={% url 'post_list_view' %}">Login</a>]
+        [<a href="{% url 'register' %}">Register</a>]
         {% endif %}
         [<a href="{% absurl 'feed' %}">Feed</a>]
       </nav>
