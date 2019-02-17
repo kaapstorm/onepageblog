@@ -1,7 +1,3 @@
-# Snippet 1518
-# by johnboxall
-# http://djangosnippets.org/snippets/1518/
-
 # This file is part of onepageblog.
 #
 # onepageblog is free software: you can redistribute it and/or modify
@@ -17,31 +13,42 @@
 # You should have received a copy of the GNU General Public License
 # along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 
-try:
-    # Python 2
-    import urlparse
-except ImportError:
-    # Python 3
-    from urllib import parse as urlparse
+# From: https://gist.github.com/laxxxguy/69aec1259131b5619fb7
+
 from django.template import Library
 from django.template.defaulttags import URLNode, url
-from django.contrib.sites.models import Site
 
 register = Library()
 
 
+class AbsoluteURL(str):
+    pass
+
+
 class AbsoluteURLNode(URLNode):
     def render(self, context):
+        asvar, self.asvar = self.asvar, None
         path = super(AbsoluteURLNode, self).render(context)
-        domain = "http://%s" % Site.objects.get_current().domain
-        return urlparse.urljoin(domain, path)
+        request_obj = context['request']
+        abs_url = AbsoluteURL(request_obj.build_absolute_uri(path))
+
+        if not asvar:
+            return str(abs_url)
+        else:
+            if path == request_obj.path:
+                abs_url.active = 'active'
+            else:
+                abs_url.active = ''
+            context[asvar] = abs_url
+            return ''
 
 
 @register.tag
-def absurl(parser, token, node_cls=AbsoluteURLNode):
-    """Just like {% url %} but prepends the domain of the current site."""
-    node_instance = url(parser, token)
-    return node_cls(view_name=node_instance.view_name,
-                    args=node_instance.args,
-                    kwargs=node_instance.kwargs,
-                    asvar=node_instance.asvar)
+def absurl(parser, token):
+    node = url(parser, token)
+    return AbsoluteURLNode(
+        view_name=node.view_name,
+        args=node.args,
+        kwargs=node.kwargs,
+        asvar=node.asvar
+    )
