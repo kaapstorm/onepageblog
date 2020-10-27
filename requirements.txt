@@ -1,6 +1,4 @@
 Django==2.2.13
-Markdown==3.0.1
-mysqlclient==1.4.2.post1
-pytest==4.2.0
-pytest-django==3.4.7
-pytz==2018.9
+Markdown
+pytest
+pytest-django
