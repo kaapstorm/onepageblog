@@ -75,8 +75,8 @@ urlpatterns = [
          name='password_change_view'),
     path('accounts/', include(auth_urls)),
 
-    # Admin URL
-    path('admin/', admin.site.urls),
+    # Non-standard admin URL
+    path('django-admin/', admin.site.urls),
 ]
 
 if settings.DEBUG :
