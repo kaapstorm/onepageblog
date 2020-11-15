@@ -163,9 +163,9 @@ BLOG_FOOTER = """
           Public License</a>, and is available at
           <a href="https://github.com/kaapstorm/onepageblog">GitHub</a>.
 
-          The lightbulb icon is by
-          <a href="http://tango.freedesktop.org/The_People">the people from
-          the Tango! project</a>. The favicon is from the
+          The lightbulb icon is by the people from the
+          <a href="http://tango-project.org/">Tango desktop project</a>.
+          The favicon is from the
           <a href="http://www.famfamfam.com/lab/icons/silk/">famfamfam Silk
           icon set</a> by Mark James.
         </p>
