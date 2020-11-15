@@ -16,21 +16,13 @@
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import dj_database_url
+
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '^#fo)6kwyk2bda1u8od@i$xiwhu2tjoxac=rx4u1p(%p6!pbcc'
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-
 TEMPLATE_DEBUG = False
-
-ALLOWED_HOSTS = []
-
-
-# Application definition
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -73,70 +65,26 @@ TEMPLATES = [
         }
     }
 ]
-
-# Database
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'standalone', 'sqlite3.db'),
-    }
-}
-
-# Internationalization
-LANGUAGE_CODE = 'en'
-
-TIME_ZONE = 'UTC'
-
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'standalone', 'static')
-
-# A sample logging configuration. The only tangible logging
-# performed by this configuration is to send an email to
-# the site admins on every HTTP 500 error when DEBUG=False.
-# See http://docs.djangoproject.com/en/dev/topics/logging for
-# more details on how to customize your logging configuration.
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
-    },
-    'handlers': {
-        'mail_admins': {
-            'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler'
-        }
-    },
-    'loggers': {
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': True,
-        },
-    }
-}
-
 TEMPLATE_DIRS = (
     BASE_DIR + '/posts/templates/',
     BASE_DIR + '/standalone/templates/',
 )
 
+# Internationalization
+LANGUAGE_CODE = 'en'
+TIME_ZONE = 'UTC'
+USE_I18N = False
+USE_L10N = False
+USE_TZ = False
+
+# Static files (CSS, JavaScript, Images)
+STATIC_ROOT = os.path.join(BASE_DIR, 'standalone', 'static')
+
 SITE_ID = 1
 
 # Disqus website shortname for Disqus comments.
 # Set "DISQUS_SHORTNAME = None" to disable Disqus comments.
-DISQUS_SHORTNAME = 'onepageblog'
+DISQUS_SHORTNAME = os.environ.get('DISQUS_SHORTNAME')
 
 # Disallow raw HTML in posts. Valid values are of "remove", "replace" or
 # "escape". Set to False to support markup not supported by Markdown, but risk
@@ -146,6 +94,43 @@ MARKDOWN_SAFE_MODE = 'escape'
 # The title to use as the page heading and the text in title bar.
 BLOG_TITLE = 'onepageblog'
 
+if os.environ['DEPLOY_ENV'] == 'dev':
+    DEBUG = True
+    TEMPLATE_DEBUG = True
 
-# Import local overrides
-from .settings_local import *
+    SECRET_KEY = os.environ['SECRET_KEY']
+
+    ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS'].split(' ')
+
+    DATABASES = {
+        'default': dj_database_url.config(conn_max_age=600)
+    }
+
+    STATIC_URL = '/static/'
+
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'filters': {
+            'require_debug_false': {
+                '()': 'django.utils.log.RequireDebugFalse'
+            }
+        },
+        'handlers': {
+            'mail_admins': {
+                'level': 'ERROR',
+                'filters': ['require_debug_false'],
+                'class': 'django.utils.log.AdminEmailHandler'
+            }
+        },
+        'loggers': {
+            'django.request': {
+                'handlers': ['mail_admins'],
+                'level': 'ERROR',
+                'propagate': True,
+            },
+        }
+    }
+
+else:
+    raise ValueError(f"Unknown deploy environment {os.environ['DEPLOY_ENV']}")

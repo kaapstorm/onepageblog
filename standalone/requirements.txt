@@ -1,4 +1,5 @@
 Django~=2.2
+dj_database_url
 Markdown
 pytest
 pytest-django
