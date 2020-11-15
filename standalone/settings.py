@@ -42,6 +42,7 @@ INSTALLED_APPS = (
 
     'posts',
     'posts.templatetags',
+    'standalone',
 )
 
 MIDDLEWARE = [
@@ -54,9 +55,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'onepageblog.urls'
+ROOT_URLCONF = 'posts.urls'
 
-WSGI_APPLICATION = 'onepageblog.wsgi.application'
+WSGI_APPLICATION = 'standalone.wsgi.application'
 
 TEMPLATES = [
     {
@@ -77,7 +78,7 @@ TEMPLATES = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'sqlite3.db'),
+        'NAME': os.path.join(BASE_DIR, 'standalone', 'sqlite3.db'),
     }
 }
 
@@ -95,7 +96,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'onepageblog', 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'standalone', 'static')
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -126,7 +127,10 @@ LOGGING = {
     }
 }
 
-TEMPLATE_DIRS = (BASE_DIR + '/templates/',)
+TEMPLATE_DIRS = (
+    BASE_DIR + '/posts/templates/',
+    BASE_DIR + '/standalone/templates/',
+)
 
 SITE_ID = 1
 
@@ -142,34 +146,6 @@ MARKDOWN_SAFE_MODE = 'escape'
 # The title to use as the page heading and the text in title bar.
 BLOG_TITLE = 'onepageblog'
 
-# Blog footer appears at the bottom of all pages, including the 404 and 500
-# error pages. It is wrapped in HTML5 "<footer>" tags.
-BLOG_FOOTER = """
-        <p class="blurb">
-          <em><span xmlns:dct="http://purl.org/dc/terms/"
-                    href="http://purl.org/dc/dcmitype/Text"
-                    property="dct:title"
-                    rel="dct:type">onepageblog</span></em>
-          content by <span xmlns:cc="http://creativecommons.org/ns#"
-                           property="cc:attributionName"
-                           rel="cc:attributionURL">Norman Hooper</span>
-          is licensed under a
-          <a rel="license"
-             href="http://creativecommons.org/licenses/by-sa/3.0/">Creative
-          Commons Attribution-ShareAlike 3.0 Unported License</a>.
-
-          The source code is released under the
-          <a href="https://www.gnu.org/licenses/agpl.html">GNU Affero General
-          Public License</a>, and is available at
-          <a href="https://github.com/kaapstorm/onepageblog">GitHub</a>.
-
-          The lightbulb icon is by the people from the
-          <a href="http://tango-project.org/">Tango desktop project</a>.
-          The favicon is from the
-          <a href="http://www.famfamfam.com/lab/icons/silk/">famfamfam Silk
-          icon set</a> by Mark James.
-        </p>
-"""
 
 # Import local overrides
-from onepageblog.settings_local import *
+from .settings_local import *
