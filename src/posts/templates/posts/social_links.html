@@ -24,9 +24,9 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
   [<a href="http://www.facebook.com/sharer/sharer.php?u={% absurl 'post_detail_view' slug=post.slug %}"
       rel="nofollow"
       title="Facebook"> f</a>]
-  [<a href="https://plus.google.com/share?url={% absurl 'post_detail_view' slug=post.slug %}"
+  [<a href="http://www.reddit.com/submit?url={% absurl 'post_detail_view' slug=post.slug %}&amp;title={{ post.title|urlencode }}"
       rel="nofollow"
-      title="Google+">g+</a>]
+      title="Reddit">ri</a>]
   [<a href="http://www.linkedin.com/shareArticle?mini=true&amp;url={% absurl 'post_detail_view' slug=post.slug %}&amp;title={{ post.title|urlencode }}&amp;source={{ blog_title|urlencode }}"
       rel="nofollow"
       title="LinkedIn">in</a>]
