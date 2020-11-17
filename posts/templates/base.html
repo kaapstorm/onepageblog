@@ -93,7 +93,7 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
         {% block content %}{% endblock %}
       </div>
 
-      <footer>{{ blog_footer|safe }}</footer>
+      <footer>{% include 'footer.html' %}</footer>
     </div>
   </body>
 </html>
