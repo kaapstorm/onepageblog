@@ -56,6 +56,11 @@ Set automatically by `manage-dev`, or set manually:
 - **AJAX loading:** `posts/static/onepageblog/js/onepageblog.js` fetches
   `/post/<slug>/ajax/` and injects into the page.
 
+## Documentation
+
+- Design specs: `docs/specs/YYYY-MM-DD_<design_spec_title>.md`
+- Roadmap: `docs/roadmap.md`
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup, testing
