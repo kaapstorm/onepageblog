@@ -17,7 +17,6 @@ from datetime import datetime
 import re
 import markdown
 from django.db import models
-from django.conf import settings
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from django.urls import reverse
@@ -70,7 +69,6 @@ class Post(models.Model):
         self.content = markdown.markdown(
             self.content_markdown,
             extensions=['extra'],
-            safe_mode=settings.MARKDOWN_SAFE_MODE
         )
 
         # Create unique slug
@@ -91,7 +89,7 @@ class Post(models.Model):
         if self.is_published and not self.published_at:
             self.published_at = datetime.now()
 
-        super(Post, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     class Meta:
         ordering = ['-created_at']
