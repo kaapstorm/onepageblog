@@ -1,56 +1,83 @@
-# This file is part of onepageblog.
-#
-# onepageblog is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# onepageblog is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
-from contextlib import contextmanager
+from django.contrib.auth.models import Group, User
+from django.test import Client as DjangoClient
+from unmagic import fixture, use
 
 from posts.models import Post
+from posts.tests.fixtures import client, post, user
 
 
-@contextmanager
-def get_post():
-    post = Post(title='My Post')
-    post.save()
-    yield post
-    post.delete()
-
-
-def test_post_list_view_200(client):
-    response = client.get('/')
+@use("db")
+@use(client)
+def test_post_list_view_200():
+    response = client().get('/')
     assert response.status_code == 200
 
 
-def test_new_post_view_200(client):
-    response = client.get('/new/')
+@use("db")
+@use(client)
+def test_new_post_view_redirects_anonymous():
+    response = client().get('/new/')
+    assert response.status_code == 302
+
+
+@use("db")
+@use(client, post)
+def test_post_detail_view_200():
+    response = client().get('/post/my-post/')
     assert response.status_code == 200
 
 
-def test_post_detail_view_200(client):
-    with get_post():
-        response = client.get('/post/my-post/')
-        assert response.status_code == 200
+@use("db")
+@use(client, post)
+def test_feed_200():
+    response = client().get('/feed/rss20.xml')
+    assert response.status_code == 200
 
 
-def test_feed_200(client):
-    with get_post():
-        response = client.get('/feed/rss20.xml')
-        assert response.status_code == 200
+@fixture
+def moderator_client():
+    mod_user = User.objects.create_user(username='mod', password='pass')
+    group, _ = Group.objects.get_or_create(name='Moderators')
+    mod_user.groups.add(group)
+    c = DjangoClient()
+    c.login(username='mod', password='pass')
+    yield c
+    mod_user.delete()
 
 
-# TODO: Test user views
+@fixture
+def unpublished_post():
+    u = User.objects.create_user(username='draftauthor', password='pass')
+    p = Post(title='Draft Post', is_published=False, created_by=u)
+    p.save()
+    yield p
+    p.delete()
+    u.delete()
 
-# TODO: Test only members of Moderators group can preview unpublished posts
 
-# TODO: Comments notification e-mails
+@use("db")
+@use(client, unpublished_post)
+def test_unpublished_post_not_visible_to_anonymous():
+    response = client().get('/post/draft-post/')
+    assert response.status_code == 404
 
-# TODO: Test comment feeds & add comments feeds
+
+@use("db")
+@use(moderator_client, unpublished_post)
+def test_unpublished_post_visible_to_moderator():
+    response = moderator_client().get('/post/draft-post/')
+    assert response.status_code == 200
+
+
+@use("db")
+@use(moderator_client, unpublished_post)
+def test_post_list_shows_unpublished_to_moderator():
+    response = moderator_client().get('/')
+    assert b'Draft Post' in response.content
+
+
+@use("db")
+@use(client, unpublished_post)
+def test_post_list_hides_unpublished_from_anonymous():
+    response = client().get('/')
+    assert b'Draft Post' not in response.content
