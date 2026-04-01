@@ -93,6 +93,21 @@ def test_post_title():
       ...
   ```
 
+## Commit messages
+
+Prefix commit subjects with an emoji to indicate the type of change:
+
+| Emoji | Meaning                       |
+|-------|-------------------------------|
+| ✨     | New feature or enhancement    |
+| 🔧    | Bug fix                       |
+| ♻️    | Refactor (no behavior change) |
+| 🧹    | Chore / maintenance / cleanup |
+| 📝    | Documentation                 |
+| 🧪    | Tests                         |
+
+Example: `✨ Replace jQuery with HTMX + Alpine.js`
+
 ## Code style
 
 - Keep it simple. No premature abstractions.
