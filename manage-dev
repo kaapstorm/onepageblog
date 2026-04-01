@@ -3,6 +3,6 @@
 export DEPLOY_ENV=dev
 export SECRET_KEY=this-key-is-not-secret
 export ALLOWED_HOSTS='127.0.0.1 localhost'
-export DATABASE_URL='sqlite://./standalone/sqlite3.db'
+export DATABASE_URL='sqlite:///standalone/sqlite3.db'
 
-python3 manage.py $*
+uv run python manage.py "$@"
