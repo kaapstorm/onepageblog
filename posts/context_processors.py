@@ -18,5 +18,4 @@ from django.conf import settings
 def blog_settings(request):
     return {
         'blog_title': settings.BLOG_TITLE,
-        'disqus_shortname': settings.DISQUS_SHORTNAME
     }

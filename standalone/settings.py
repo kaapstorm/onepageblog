@@ -32,7 +32,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'posts',
-    'posts.templatetags',
     'standalone',
 )
 

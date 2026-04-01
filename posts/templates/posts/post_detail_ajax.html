@@ -15,8 +15,6 @@ You should have received a copy of the GNU General Public License
 along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 
 {% endcomment %}
-{% load absurl %}
-
 <div class="list_item_inner">
   {% if post.summary %}
     <blockquote>{{ post.summary }}</blockquote>
@@ -25,9 +23,5 @@ along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 </div>
 
 <p class="post_link">
-  [<a href="{% absurl 'post_detail_view' slug=post.slug %}">Permalink</a>]
-  {% if disqus_shortname %}
-  [<a href="{% absurl 'post_detail_view' slug=post.slug %}#disqus_thread">Comment</a>]
-  {% endif %}
-  | {% include "posts/social_links.html" %}
+  [<a href="{% url 'post_detail_view' slug=post.slug %}">Permalink</a>]
 </p>
