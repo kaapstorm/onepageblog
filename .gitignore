@@ -1,6 +1,11 @@
 *.pyc
-fabfile.py
-src/onepageblog/settings_local.py
-src/db.sqlite3
-doc/_build
+__pycache__/
+*.egg-info/
+venv/
+.venv/
+.python-version
+standalone/settings_local.py
+standalone/sqlite3.db
+standalone/fixtures.json
+standalone/utcfixtures.json
 .idea/
