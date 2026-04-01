@@ -56,6 +56,11 @@ Set automatically by `manage-dev`, or set manually:
 - **AJAX loading:** `posts/static/onepageblog/js/onepageblog.js` fetches
   `/post/<slug>/ajax/` and injects into the page.
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup, testing
+conventions (pytest + pytest-unmagic), and code style.
+
 ## Known tech debt (pre-refresh)
 
 - Django 2.2 (EOL). Target: Django 4.2+ or 5.x.
