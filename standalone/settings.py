@@ -22,7 +22,6 @@ import dj_database_url
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 DEBUG = False
-TEMPLATE_DEBUG = False
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -65,10 +64,6 @@ TEMPLATES = [
         }
     }
 ]
-TEMPLATE_DIRS = (
-    BASE_DIR + '/posts/templates/',
-    BASE_DIR + '/standalone/templates/',
-)
 
 # Internationalization
 LANGUAGE_CODE = 'en'
@@ -81,23 +76,13 @@ USE_TZ = False
 STATIC_ROOT = os.path.join(BASE_DIR, 'standalone', 'static')
 
 SITE_ID = 1
-
-# Disqus website shortname for Disqus comments.
-# Set "DISQUS_SHORTNAME = None" to disable Disqus comments.
-DISQUS_SHORTNAME = os.environ.get('DISQUS_SHORTNAME')
-
-# Disallow raw HTML in posts. Valid values are of "remove", "replace" or
-# "escape". Set to False to support markup not supported by Markdown, but risk
-# cross-site scripting.
-MARKDOWN_SAFE_MODE = 'escape'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # The title to use as the page heading and the text in title bar.
 BLOG_TITLE = 'onepageblog'
 
 if os.environ['DEPLOY_ENV'] == 'dev':
     DEBUG = True
-    TEMPLATE_DEBUG = True
-
     SECRET_KEY = os.environ['SECRET_KEY']
 
     ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS'].split(' ')

@@ -13,13 +13,12 @@
 # You should have received a copy of the GNU General Public License
 # along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 from django.conf import settings
-from django.conf.urls import include
 from django.contrib import admin
 from django.contrib.auth import (
     urls as auth_urls,
     views as auth_views,
 )
-from django.urls import path, re_path, reverse_lazy
+from django.urls import include, path, re_path, reverse_lazy
 from django.views.generic import RedirectView
 from django.views.static import serve
 
