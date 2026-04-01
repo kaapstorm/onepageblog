@@ -12,8 +12,8 @@ Intended to be used as a submodule in a larger Django project. The
 
 | Name          | Description                                                                      |
 |---------------|----------------------------------------------------------------------------------|
-| `posts/`      | The reusable Django app (models, views, urls, feeds, forms, templatetags, tests) |
-| `standalone/` | Standalone harness: settings.py, wsgi.py, requirements.txt, fixtures             |
+| `posts/`      | The reusable Django app (models, views, urls, feeds, forms, tests)               |
+| `standalone/` | Standalone harness: settings.py, wsgi.py, fixtures                               |
 | `manage.py`   | Standard Django manage.py                                                        |
 | `manage-dev`  | Shell script: sets dev env vars, then delegates to manage.py                     |
 
@@ -30,7 +30,7 @@ Intended to be used as a submodule in a larger Django project. The
 ./manage-dev loaddata standalone/fixtures.json
 
 # Run tests (from repo root)
-DJANGO_SETTINGS_MODULE=standalone.settings DEPLOY_ENV=dev SECRET_KEY=x ALLOWED_HOSTS=localhost DATABASE_URL='sqlite:///standalone/sqlite3.db' pytest posts/tests/
+DEPLOY_ENV=dev SECRET_KEY=x ALLOWED_HOSTS=localhost DATABASE_URL='sqlite:///standalone/sqlite3.db' uv run pytest posts/tests/
 ```
 
 ## Environment variables (required for dev)
@@ -43,7 +43,6 @@ Set automatically by `manage-dev`, or set manually:
 | `SECRET_KEY`       | any string                             |
 | `ALLOWED_HOSTS`    | space-separated hostnames              |
 | `DATABASE_URL`     | e.g. `sqlite:///standalone/sqlite3.db` |
-| `DISQUS_SHORTNAME` | optional; omit to disable Disqus       |
 
 ## Key patterns
 
@@ -53,8 +52,8 @@ Set automatically by `manage-dev`, or set manually:
   `-2`, `-3` etc. for duplicates.
 - **Authorization:** Moderators (users in the `Moderators` group) can
   see unpublished posts.
-- **AJAX loading:** `posts/static/onepageblog/js/onepageblog.js` fetches
-  `/post/<slug>/ajax/` and injects into the page.
+- **AJAX loading:** HTMX fetches `/post/<slug>/ajax/` when the title
+  is clicked; Alpine.js handles the toggle state.
 
 ## Documentation
 
@@ -65,14 +64,3 @@ Set automatically by `manage-dev`, or set manually:
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup, testing
 conventions (pytest + pytest-unmagic), and code style.
-
-## Known tech debt (pre-refresh)
-
-- Django 2.2 (EOL). Target: Django 4.2+ or 5.x.
-- `from django.conf.urls import include` removed in Django 4.0 — needs 
-  updating.
-- `markdown.markdown(..., safe_mode=...)` — `safe_mode` was removed in
-  Markdown 3.0.
-- `tox.ini` references stale `DJANGO_SETTINGS_MODULE=onepageblog.settings`.
-- jQuery 3.5.1 bundled locally — consider removing jQuery or updating.
-- `.pyc` files checked into git (should be gitignored).

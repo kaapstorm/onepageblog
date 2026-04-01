@@ -9,12 +9,11 @@ indirection, or dependencies unless they earn their keep.
 ## Development setup
 
 ```bash
-# Create and activate a virtualenv
-python3 -m venv venv
-source venv/bin/activate
+# Install uv (if not already installed)
+# See https://docs.astral.sh/uv/getting-started/installation/
 
 # Install dependencies
-pip install -r standalone/requirements.txt
+uv sync
 
 # Run migrations
 ./manage-dev migrate
@@ -26,12 +25,9 @@ pip install -r standalone/requirements.txt
 ## Running tests
 
 ```bash
-DJANGO_SETTINGS_MODULE=standalone.settings \
-  DEPLOY_ENV=dev \
-  SECRET_KEY=x \
-  ALLOWED_HOSTS=localhost \
+DEPLOY_ENV=dev SECRET_KEY=x ALLOWED_HOSTS=localhost \
   DATABASE_URL='sqlite:///standalone/sqlite3.db' \
-  pytest posts/tests/
+  uv run pytest posts/tests/
 ```
 
 ## Testing conventions
@@ -102,3 +98,5 @@ def test_post_title():
 - Keep it simple. No premature abstractions.
 - Follow existing patterns in the codebase.
 - License: AGPL-3.0 (see `COPYING`).
+- HTMX and Alpine.js are loaded via CDN in `base.html` — no
+  npm/node/build step needed.
