@@ -15,12 +15,13 @@
 # along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from pathlib import Path
+
 import dj_database_url
 
 
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 DEBUG = False
 
@@ -73,7 +74,7 @@ USE_L10N = False
 USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
-STATIC_ROOT = os.path.join(BASE_DIR, 'standalone', 'static')
+STATIC_ROOT = BASE_DIR / 'standalone' / 'static'
 
 SITE_ID = 1
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
