@@ -1,22 +1,16 @@
 import inspect
 from datetime import datetime
 
-from django.contrib.auth.models import User
 from unmagic import fixture, use
 
 from posts.models import Post
+from posts.tests.fixtures import user
 
 
-@fixture
-def user():
-    u = User.objects.create_user(username='testuser', password='pass')
-    yield u
-    u.delete()
-
-
+@use(user)
 @fixture
 def posts_triple():
-    u = User.objects.create_user(username='sluguser', password='pass')
+    u = user()
     post0 = Post(title='My Post', created_by=u)
     post0.save()
     post1 = Post(title='My Post', created_by=u)
@@ -27,7 +21,6 @@ def posts_triple():
     post2.delete()
     post1.delete()
     post0.delete()
-    u.delete()
 
 
 @use(user)

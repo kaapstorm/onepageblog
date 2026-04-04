@@ -1,9 +1,6 @@
-from django.contrib.auth.models import Group, User
-from django.test import Client as DjangoClient
-from unmagic import fixture, use
+from unmagic import use
 
-from posts.models import Post
-from posts.tests.fixtures import client, post, user
+from posts.tests.fixtures import client, moderator_client, post, unpublished_post
 
 
 @use("db")
@@ -32,27 +29,6 @@ def test_post_detail_view_200():
 def test_feed_200():
     response = client().get('/feed/rss20.xml')
     assert response.status_code == 200
-
-
-@fixture
-def moderator_client():
-    mod_user = User.objects.create_user(username='mod', password='pass')
-    group, _ = Group.objects.get_or_create(name='Moderators')
-    mod_user.groups.add(group)
-    c = DjangoClient()
-    c.login(username='mod', password='pass')
-    yield c
-    mod_user.delete()
-
-
-@fixture
-def unpublished_post():
-    u = User.objects.create_user(username='draftauthor', password='pass')
-    p = Post(title='Draft Post', is_published=False, created_by=u)
-    p.save()
-    yield p
-    p.delete()
-    u.delete()
 
 
 @use("db")

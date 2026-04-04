@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import Group, User
 from django.test import Client
 from unmagic import fixture, use
 
@@ -24,3 +24,24 @@ def post():
     p.save()
     yield p
     p.delete()
+
+
+@fixture
+def moderator_client():
+    mod_user = User.objects.create_user(username='mod', password='pass')
+    group, _ = Group.objects.get_or_create(name='Moderators')
+    mod_user.groups.add(group)
+    c = Client()
+    c.login(username='mod', password='pass')
+    yield c
+    mod_user.delete()
+
+
+@fixture
+def unpublished_post():
+    u = User.objects.create_user(username='draftauthor', password='pass')
+    p = Post(title='Draft Post', is_published=False, created_by=u)
+    p.save()
+    yield p
+    p.delete()
+    u.delete()
