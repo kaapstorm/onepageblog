@@ -123,7 +123,7 @@ def edit_profile(request):
     if request.method == 'POST':
         form = UserChangeForm(request.POST, instance=request.user)
         if form.is_valid():
-            form.save(commit=False)
+            form.save()
             return HttpResponseRedirect(reverse('post_list_view'))
     else:
         form = UserChangeForm(instance=request.user)
