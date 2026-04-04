@@ -8,18 +8,19 @@
 
 <div id="list_items">
     {% for post in post_list %}
-    <div class="list_item" x-data="{ open: false, loaded: false }">
+    <div class="list_item" x-data="{ open: false }">
 
-        <h2>
-            <a href="{{ post.get_absolute_url }}"
-               hx-get="{{ post.get_absolute_url }}ajax/"
-               hx-target="next .list_item_outer"
-               hx-swap="innerHTML"
-               hx-trigger="click once"
-               @click.prevent="open = !open; loaded = true"
-               >{{ post.title }}</a>
-        </h2>
-        <h3>{{ post.published_at|date:"D, j M Y" }} | {{ post.created_by }}</h3>
+        <div class="post-header"
+             hx-get="{{ post.get_absolute_url }}ajax/"
+             hx-target="next .list_item_outer"
+             hx-swap="innerHTML"
+             hx-trigger="click once"
+             @click="open = !open">
+            <span class="toggle-icon" x-text="open ? '∧' : '∨'">∨</span>
+            <a class="permalink-icon" href="{{ post.get_absolute_url }}" title="Permalink" @click.stop>🔗</a>
+            <h2 class="post-title">{{ post.title }}</h2>
+            <span class="post-meta">by {{ post.created_by }} | {{ post.published_at|date:"D, j M Y" }}</span>
+        </div>
 
         <div class="list_item_outer" x-show="open" x-cloak></div>
     </div>
