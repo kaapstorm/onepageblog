@@ -29,33 +29,27 @@ from posts.forms import PostForm, UserChangeForm
 from posts.models import Post
 
 
+def _is_moderator(user):
+    return (
+        user.is_authenticated and
+        user.groups.filter(name='Moderators').exists()
+    )
+
+
 class PostListView(ListView):
     context_object_name = 'post_list'
-    
+
     def get_queryset(self):
-        """If the user is a member of the Moderators group, show all posts,
-        otherwise just show published posts.
-        """
-        if (
-                hasattr(self.request, 'user') and
-                self.request.user.is_authenticated and
-                self.request.user.groups.filter(name='Moderators').count()
-        ):
+        if _is_moderator(self.request.user):
             return Post.objects.all()
         return Post.objects.filter(is_published=True)
 
 
 class PostDetailView(DetailView):
     context_object_name = 'post'
-    
+
     def get_queryset(self):
-        """Allow moderators to see unpublished posts.
-        """
-        if (
-                hasattr(self.request, 'user') and
-                self.request.user.is_authenticated and
-                self.request.user.groups.filter(name='Moderators').count()
-        ):
+        if _is_moderator(self.request.user):
             return Post.objects.all()
         return Post.objects.filter(is_published=True)
 
