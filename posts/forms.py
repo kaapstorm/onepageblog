@@ -17,7 +17,6 @@
 from django.contrib.auth.forms import UserChangeForm as DjangoUserChangeForm
 from django.contrib.auth.models import User
 from django.forms import ModelForm
-from django.template.defaultfilters import slugify
 
 from posts.models import Post
 

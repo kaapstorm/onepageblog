@@ -13,7 +13,6 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
-from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth import (
     urls as auth_urls,
@@ -21,7 +20,6 @@ from django.contrib.auth import (
 )
 from django.urls import include, path, re_path, reverse_lazy
 from django.views.generic import RedirectView
-from django.views.static import serve
 
 from posts.feeds import PostsFeed
 from posts.views import (
@@ -33,9 +31,6 @@ from posts.views import (
     register,
     logout
 )
-
-
-admin.autodiscover()
 
 
 urlpatterns = [
@@ -79,9 +74,3 @@ urlpatterns = [
     path('django-admin/', admin.site.urls),
 ]
 
-if settings.DEBUG :
-    urlpatterns += [
-        re_path(r'^media/(?P<path>.*)$', serve, {
-            'document_root': settings.MEDIA_ROOT,
-        }),
-    ]
