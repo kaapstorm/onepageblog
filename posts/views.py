@@ -1,16 +1,17 @@
 # This file is part of onepageblog.
 # 
 # onepageblog is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or
 # (at your option) any later version.
 # 
 # onepageblog is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# GNU Affero General Public License for more details.
 # 
-# You should have received a copy of the GNU General Public License
+# You should have received a copy of the GNU Affero General Public License
 # along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.contrib import auth, messages
@@ -28,33 +29,27 @@ from posts.forms import PostForm, UserChangeForm
 from posts.models import Post
 
 
+def _is_moderator(user):
+    return (
+        user.is_authenticated and
+        user.groups.filter(name='Moderators').exists()
+    )
+
+
 class PostListView(ListView):
     context_object_name = 'post_list'
-    
+
     def get_queryset(self):
-        """If the user is a member of the Moderators group, show all posts,
-        otherwise just show published posts.
-        """
-        if (
-                hasattr(self.request, 'user') and
-                self.request.user.is_authenticated and
-                self.request.user.groups.filter(name='Moderators').count()
-        ):
+        if _is_moderator(self.request.user):
             return Post.objects.all()
         return Post.objects.filter(is_published=True)
 
 
 class PostDetailView(DetailView):
     context_object_name = 'post'
-    
+
     def get_queryset(self):
-        """Allow moderators to see unpublished posts.
-        """
-        if (
-                hasattr(self.request, 'user') and
-                self.request.user.is_authenticated and
-                self.request.user.groups.filter(name='Moderators').count()
-        ):
+        if _is_moderator(self.request.user):
             return Post.objects.all()
         return Post.objects.filter(is_published=True)
 
@@ -122,7 +117,7 @@ def edit_profile(request):
     if request.method == 'POST':
         form = UserChangeForm(request.POST, instance=request.user)
         if form.is_valid():
-            form.save(commit=False)
+            form.save()
             return HttpResponseRedirect(reverse('post_list_view'))
     else:
         form = UserChangeForm(instance=request.user)

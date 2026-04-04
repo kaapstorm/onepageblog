@@ -1,27 +1,25 @@
 # This file is part of onepageblog.
 #
 # onepageblog is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or
 # (at your option) any later version.
 #
 # onepageblog is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# GNU Affero General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
+# You should have received a copy of the GNU Affero General Public License
 # along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
-from django.conf import settings
-from django.conf.urls import include
 from django.contrib import admin
 from django.contrib.auth import (
     urls as auth_urls,
     views as auth_views,
 )
-from django.urls import path, re_path, reverse_lazy
+from django.urls import include, path, re_path, reverse_lazy
 from django.views.generic import RedirectView
-from django.views.static import serve
 
 from posts.feeds import PostsFeed
 from posts.views import (
@@ -33,9 +31,6 @@ from posts.views import (
     register,
     logout
 )
-
-
-admin.autodiscover()
 
 
 urlpatterns = [
@@ -79,9 +74,3 @@ urlpatterns = [
     path('django-admin/', admin.site.urls),
 ]
 
-if settings.DEBUG :
-    urlpatterns += [
-        re_path(r'^media/(?P<path>.*)$', serve, {
-            'document_root': settings.MEDIA_ROOT,
-        }),
-    ]

@@ -152,3 +152,7 @@ div.outer {
 .comment_link {
     font-size: small;
 }
+
+[x-cloak] {
+    display: none !important;
+}

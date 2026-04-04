@@ -1,33 +1,5 @@
 {% extends "base.html" %}
-{% comment %}
-This file is part of onepageblog.
 
-onepageblog is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-onepageblog is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with onepageblog.  If not, see <http://www.gnu.org/licenses/>.
-
-{% endcomment %}
-
-{% block script %}
-<script type="text/javascript"><!--
-
-$(document).ready(function () {
-    // Change anchors to AJAX
-    $('div.list_item > h2 > a').each(onepageblog.load_post);
-});
-
-// -->
-</script>
-{% endblock %}
 {% block content %}
 
 <nav id="actions_nav">
@@ -36,14 +8,20 @@ $(document).ready(function () {
 
 <div id="list_items">
     {% for post in post_list %}
-    <div class="list_item">
+    <div class="list_item" x-data="{ open: false, loaded: false }">
 
         <h2>
-            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+            <a href="{{ post.get_absolute_url }}"
+               hx-get="{{ post.get_absolute_url }}ajax/"
+               hx-target="next .list_item_outer"
+               hx-swap="innerHTML"
+               hx-trigger="click once"
+               @click.prevent="open = !open; loaded = true"
+               >{{ post.title }}</a>
         </h2>
         <h3>{{ post.published_at|date:"D, j M Y" }} | {{ post.created_by }}</h3>
 
-        <div class="list_item_outer"></div>
+        <div class="list_item_outer" x-show="open" x-cloak></div>
     </div>
 
     {% endfor %}

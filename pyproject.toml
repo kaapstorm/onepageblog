@@ -1,0 +1,22 @@
+[project]
+name = "onepageblog"
+version = "2.0.0"
+description = "A small Django blogging application"
+license = "AGPL-3.0-or-later"
+requires-python = ">=3.10"
+dependencies = [
+    "django~=5.2",
+    "dj-database-url",
+    "markdown",
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "pytest-django",
+    "pytest-unmagic",
+]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "standalone.settings"
+python_files = "tests.py test_*.py"
