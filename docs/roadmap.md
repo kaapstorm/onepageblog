@@ -1,176 +1,110 @@
-# Refresh roadmap
+# Roadmap
 
-This document plans the modernization of onepageblog. The work is
-ordered so that each phase produces a working codebase — no phase
-depends on a later one.
-
-
-## Phase 1: Project tooling
-
-Switch from `standalone/requirements.txt` + manual venv to **uv** with
-a `pyproject.toml` at the repo root.
-
-- [ ] Create `pyproject.toml` with project metadata (name, version,
-      license, Python version, etc.) and dependencies.
-- [ ] Pin Django 5.2 and current versions of Markdown, pytest,
-      pytest-django, pytest-unmagic, dj-database-url.
-- [ ] Remove `standalone/requirements.txt`.
-- [ ] Replace `manage-dev` shell script with a simpler wrapper that
-      works with `uv run`, or document `uv run manage.py` directly.
-- [ ] Add `uv.lock` to version control.
-- [ ] Update `CLAUDE.md` and `CONTRIBUTING.md` with the new commands.
-- [ ] Update `.gitignore`: drop old `src/` paths, add `venv/`,
-      `__pycache__/`, `*.pyc`, `.python-version`.
+The Django 2.2 → 5.2 refresh is complete. This document records what
+comes next.
 
 
-## Phase 2: Django 5.2 upgrade
+## Tests: reduce duplication
 
-Upgrade from Django 2.2 to 5.2. The main breaking changes are:
+The `user` fixture is defined twice — once in `posts/tests/fixtures.py`
+and again identically in `posts/tests/test_models.py`. The model tests
+should import it from `fixtures.py` rather than redefining it.
 
-### URL configuration
+Similarly, `posts_triple` creates its own user inline rather than
+composing the shared `user` fixture, and `moderator_client` in
+`test_views.py` creates yet another user independently. Pulling these
+together would mean any change to how test users are created only
+needs to happen in one place.
 
-- `django.conf.urls.include` was removed in Django 4.0. Change
-  `posts/urls.py` to import `include` from `django.urls`.
+Concrete changes:
 
-### Settings
+- Remove `user` fixture from `test_models.py`; import it from
+  `fixtures.py`.
+- Rewrite `posts_triple` to compose the shared `user` fixture via
+  `@use(user)` (and import `user` from `fixtures.py`).
+- Move `moderator_client` and `unpublished_post` from `test_views.py`
+  into `fixtures.py` so they can be shared if further view tests are
+  added. `moderator_client` should compose `user` or create its own
+  user — currently `moderator_client` creates a `mod` user and
+  `unpublished_post` creates a `draftauthor` user; that's fine, but
+  both should be defined alongside the other shared fixtures.
 
-- `TEMPLATE_DEBUG` was removed in Django 1.10 — delete it.
-- `TEMPLATE_DIRS` was removed in Django 1.10 — delete it (already
-  covered by `TEMPLATES[0]['APP_DIRS']`).
-- Add `DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'` to
-  suppress the Django 3.2+ warning.
 
-### Markdown `safe_mode`
+## Views: duplicated moderator check
 
-The `safe_mode` parameter was removed from the `markdown` library in
-version 3.0. In `Post.save()`, replace:
+`PostListView.get_queryset()` and `PostDetailView.get_queryset()` are
+identical — both check `request.user.groups.filter(name='Moderators')`
+and return either all posts or only published ones. Extract a helper:
 
 ```python
-markdown.markdown(
-    self.content_markdown,
-    extensions=['extra'],
-    safe_mode=settings.MARKDOWN_SAFE_MODE
-)
+def _is_moderator(user):
+    return (
+        user.is_authenticated and
+        user.groups.filter(name='Moderators').exists()
+    )
 ```
 
-with the `bleach` library or `nh3` for HTML sanitization after
-rendering, or simply drop sanitization if all authors are trusted
-(admin-only publishing). Remove the `MARKDOWN_SAFE_MODE` setting.
+The `hasattr(self.request, 'user')` guard is also unnecessary — Django's
+`AuthenticationMiddleware` guarantees `request.user` is always set.
+Remove it from both views.
 
-### Model / ORM
-
-- `super(Post, self).save(...)` → `super().save(...)` (Python 3 style).
-
-### Auth views
-
-- `django.contrib.auth.views.LoginView` / `PasswordChangeView` are
-  already class-based — these are fine.
-- Verify the custom `logout` view still works (Django 5.0 changed
-  `LogoutView` to reject GET requests, but we use a custom function
-  view so this is not affected).
-
-### Other
-
-- Run `python manage.py check --deploy` and fix any warnings.
-- Regenerate migrations if needed (`makemigrations`).
-- Run the full test suite.
+Use `.exists()` instead of `.count() > 0` — it short-circuits and is
+the idiomatic Django form.
 
 
-## Phase 3: Frontend — drop jQuery, add HTMX + Alpine.js
+## Model: minor cleanups
 
-The frontend currently uses jQuery for two things:
+- The `get_sentinel_user` docstring URL references Django 2.1; update
+  to current docs or remove the comment.
+- The inline comment `# Convert Markdown to safe HTML. Enable extra
+  features. Escape tags.` mentions "Escape tags" which is no longer
+  true (safe_mode was removed). Remove the stale comment.
+- The slug regex `'(.+?)(?:-\d+)?$'` uses an unescaped backslash
+  (`\d`) in a plain string — use a raw string: `r'(.+?)(?:-\d+)?$'`.
+- The `TODO` comment about `comments_enabled` has been there since the
+  original codebase and has no plan behind it. Remove it.
 
-1. **AJAX post loading** (`onepageblog.js` → `load_post`): clicking a
-   post title on the list page fetches `/post/<slug>/ajax/` and injects
-   the HTML.
-2. **Toggle**: clicking the title again hides/shows the loaded content.
 
-### Replace with HTMX
+## URLs: minor cleanups
 
-HTMX handles the AJAX load natively:
+- `admin.autodiscover()` is called unconditionally at module level in
+  `posts/urls.py`. Django calls it automatically since Django 1.7; the
+  explicit call is a no-op. Remove it.
+- The `MEDIA_ROOT` debug-serve block references `settings.MEDIA_ROOT`
+  which is never set, so this would error if triggered. Remove it
+  (media files are not a feature of this app).
 
-```html
-<div class="list_item"
-     x-data="{ open: false }">
-  <h2>
-    <a href="{{ post.get_absolute_url }}"
-       hx-get="/post/{{ post.slug }}/ajax/"
-       hx-target="next .list_item_outer"
-       hx-swap="innerHTML"
-       @click.prevent="open = !open"
-       hx-trigger="click once">
-      {{ post.title }}
-    </a>
-  </h2>
-  <h3>...</h3>
-  <div class="list_item_outer" x-show="open"></div>
-</div>
+
+## Forms: unused import
+
+`posts/forms.py` imports `slugify` from `django.template.defaultfilters`
+but never uses it. Remove the import.
+
+
+## Settings: use `pathlib`
+
+`standalone/settings.py` uses `os.path.dirname(os.path.dirname(__file__))`
+for `BASE_DIR`. The modern idiom is:
+
+```python
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent.parent
 ```
 
-### Replace with Alpine.js
-
-Alpine handles the toggle state (`x-data`, `x-show`, `@click`). No
-build step needed — just a `<script>` tag.
-
-### Steps
-
-- [ ] Remove `posts/static/onepageblog/js/jquery-3.5.1.min.js`.
-- [ ] Remove `posts/static/onepageblog/js/onepageblog.js`.
-- [ ] Add HTMX and Alpine.js via CDN `<script>` tags in `base.html`
-      (no bundling — keep it simple).
-- [ ] Rewrite `post_list.html` to use `hx-get` + `x-show` for the
-      AJAX-load-and-toggle behavior.
-- [ ] Remove the `to_button` jQuery function (unused in templates).
-- [ ] Remove the inline `<script>` block from `post_list.html`.
+This also makes `STATIC_ROOT` cleaner:
+```python
+STATIC_ROOT = BASE_DIR / 'standalone' / 'static'
+```
 
 
-## Phase 4: Remove Disqus and social links
+## `edit_profile` view: bug
 
-Drop the Disqus comment integration and the social sharing links. Both
-pull in third-party scripts/services that add complexity without much
-value.
+`edit_profile` calls `form.save(commit=False)` but never calls
+`form.instance.save()` or `form.save_m2m()` afterwards, so profile
+changes are never actually persisted. Fix:
 
-### Disqus
-
-- [ ] Delete Disqus `<script>` blocks from `base.html` and
-      `post_detail.html`.
-- [ ] Remove `DISQUS_SHORTNAME` from settings and
-      `context_processors.py`.
-- [ ] Remove the Disqus comment link from `post_detail_ajax.html`.
-
-### Social links
-
-- [ ] Delete `posts/templates/posts/social_links.html`.
-- [ ] Remove the `{% include "posts/social_links.html" %}` from
-      `post_detail.html` and `post_detail_ajax.html`.
-
-
-## Phase 5: Test improvements
-
-Existing tests use standard pytest fixtures and the `client` magic
-fixture. Migrate to pytest-unmagic per `CONTRIBUTING.md`.
-
-- [ ] Add `pytest-unmagic` to `pyproject.toml` dependencies.
-- [ ] Rewrite `test_models.py` fixtures from `@pytest.fixture` to
-      `@fixture` / `@use` from `unmagic`.
-- [ ] Rewrite `test_views.py` to use explicit fixtures instead of the
-      magic `client` parameter.
-- [ ] Remove `tox.ini` (run pytest via `uv run pytest` instead).
-- [ ] Add tests for moderator-only views (noted as TODO in
-      `test_views.py`).
-
-
-## Phase 6: Housekeeping
-
-Small items that don't need their own phase.
-
-- [ ] Delete `.pyc` files from the repo and ensure `.gitignore` covers
-      `__pycache__/` and `*.pyc`.
-- [ ] Update license headers: source files say "GNU General Public
-      License" but `COPYING` is AGPL-3.0. Make them consistent.
-- [ ] Remove `absurl` templatetag (`posts/templatetags/absurl.py`).
-      With social links gone, it's only used for the feed link in
-      `base.html` — replace with `request.build_absolute_uri` or a
-      plain `{% url 'feed' %}`.
-- [ ] Remove `posts.templatetags` from `INSTALLED_APPS` if no other
-      templatetags remain.
+```python
+if form.is_valid():
+    form.save()
+    return HttpResponseRedirect(reverse('post_list_view'))
+```
