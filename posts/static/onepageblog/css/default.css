@@ -121,6 +121,38 @@ div.outer {
 .list_item {
     border-left: 1px solid darkslategray;
     padding-left: 2px;
+    margin-bottom: 0.5em;
+}
+
+.post-header {
+    cursor: pointer;
+    user-select: none;
+}
+
+h2.post-title {
+    display: inline;
+    margin: 0;
+}
+
+.toggle-icon {
+    font-family: monospace;
+    font-size: 0.9em;
+    color: darkslategray;
+    margin-right: 0.2em;
+}
+
+.permalink-icon {
+    font-size: 0.85em;
+    text-decoration: none;
+    margin-right: 0.2em;
+}
+
+.post-meta {
+    font-family: sans-serif;
+    font-size: 0.75em;
+    font-weight: normal;
+    color: darkslategray;
+    margin-left: 0.4em;
 }
 
 .list_item_inner {
@@ -140,18 +172,6 @@ div.outer {
     color: darkslategray;
 }
 
-.social_link {
-    font-weight: bold;
-}
-
-.social_link a {
-    font-size: medium;
-    font-family: monospace;
-}
-
-.comment_link {
-    font-size: small;
-}
 
 [x-cloak] {
     display: none !important;
